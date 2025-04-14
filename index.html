@@ -1742,6 +1742,7 @@
     <div id="title">
       <h2>Summary</h2>
       <button id="copySummaryBtn">📋 COPY THE SUMMARY</button> <button onclick="sendEmailJS()" >✉️ EMAIL THE SUMMARY</button> <button id="downloadHtmlBtn">💾 SAVE FILE WITH ANSWERS</button>
+      <p id="emailNotification" style="display: none; font-weight: bold; margin-top: 1em;"></p>
     </div>
     <div id="summary"></div>
   </div>
@@ -1872,7 +1873,7 @@
   }
 
   // ==================== Email Summary ====================
-  emailjs.init("NFXPe5qDjU1-bVYW7"); // Replace with your actual user ID
+  emailjs.init("NFXPe5qDjU1-bVYW7"); // Replace with your actual public key
 
   function sendSummaryEmail() {
     const summaryElem = document.getElementById("summary");
@@ -1888,6 +1889,22 @@
       name: fullName,
       summary: summaryText,
       title: subjectTitle
+    })
+    .then(() => {
+      const note = document.getElementById("emailNotification");
+      if (note) {
+        note.innerText = "📨 Email sent successfully.";
+        note.style.color = "green";
+        note.style.display = "block";
+      }
+    })
+    .catch(() => {
+      const note = document.getElementById("emailNotification");
+      if (note) {
+        note.innerText = "❌ Failed to send email.";
+        note.style.color = "red";
+        note.style.display = "block";
+      }
     });
   }
 
