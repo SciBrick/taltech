@@ -5,262 +5,254 @@
   <title>TalTech call for MSCA candidates</title>
   <meta name="author" content="Vladislav Ivanistsev, OpenAI ChatGPT o3 Model" />
 
+  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
-<style>
-/* Base styles */
-body, input, select, textarea, button,
-h1, h2, h3, h4, h5, h6,
-p, label, legend, input, nav, ul, li, a {
-  font-size: 16px;
-  font-family: sans-serif;
-  line-height: 1.5;
-  box-sizing: border-box;
-}
-  
-body {
-  margin: 2em auto;
-  max-width: 60em;
-  width: 100%;
-  padding: 0 1em;
-}
+  <style>
+    /* Base styles */
+    body, input, select, textarea, button,
+    p, label, legend, input, nav, ul, li, a {
+      font-size: 16px;
+      font-family: sans-serif;
+      line-height: 1.5;
+      box-sizing: border-box;
+    }
 
-/* Navigation styles */
-nav {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 99;
-  background-color: #333;
-}
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  background-color: #333;
-  overflow: hidden;
-}
-nav ul li {
-  float: left;
-}
-nav ul li a {
-  display: block;
-  padding: 1em 1.6em;
-  text-decoration: none;
-  color: white;
-}
-nav ul li a.active {
-  font-weight: bold;
-}
-nav ul li a:hover {
-  color: #f9b234;
-}
+    body {
+      margin: 2em auto;
+      max-width: 60em;
+      width: 100%;
+      padding: 0 1em;
+    }
 
-img {
-  float: left;
-  margin: 0 1em 1em 0;
-  width: 200px
-  height: 200px;
-}
+    /* Navigation styles */
+    nav {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      background-color: #333;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background-color: #333;
+      overflow: hidden;
+    }
+    nav ul li {
+      float: left;
+    }
+    nav ul li a {
+      display: block;
+      padding: 1em 1.6em;
+      text-decoration: none;
+      color: white;
+    }
+    nav ul li a.active {
+      font-weight: bold;
+    }
+    nav ul li a:hover {
+      color: #f9b234;
+    }
 
-/* Vivid tab background colors */
-nav ul li a[data-target="call"] { background-color: #1d71b9; }
-nav ul li a[data-target="supervisors"] { background-color: #951b81; }
-nav ul li a[data-target="self-evaluation"] { background-color: #00abc0; }
-nav ul li a[data-target="cv-details"] { background-color: #e94e1b; }
-nav ul li a[data-target="questions"] { background-color: #3aaa35; }
-nav ul li a[data-target="submit"] { background-color: #1d71b9; }
+    img {
+      float: left;
+      margin: 0 1em 1em 0;
+      width: 200px
+      height: 200px;
+    }
 
-/* Clear floats */
-.clearfix::after {
-  content: "";
-  display: table;
-  clear: both;
-}
+    /* Vivid tab background colors */
+    nav ul li a[data-target="call"] { background-color: #1d71b9; }
+    nav ul li a[data-target="supervisors"] { background-color: #951b81; }
+    nav ul li a[data-target="self-evaluation"] { background-color: #00abc0; }
+    nav ul li a[data-target="cv-details"] { background-color: #e94e1b; }
+    nav ul li a[data-target="questions"] { background-color: #3aaa35; }
+    nav ul li a[data-target="submit"] { background-color: #1d71b9; }
 
-/* Tab content */
-.tab-content {
-  display: none;
-}
-.tab-content.active {
-  display: block;
-}
+    /* Clear floats */
+    .clearfix::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
 
-/* Fieldset and form */
-fieldset {
-  margin-bottom: 1em;
-  padding: 1ex;
-  border: 1px solid #ccc;
-}
-legend {
-  font-weight: bold;
-  font-size: 1.2em;
-  padding: 0 0.5em;
-}
+    /* Tab content */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
 
-/* Form input and layout */
-textarea,
-input[type="url"],
-input[type="text"],
-select {
-  width: 100%;
-  box-sizing: border-box;
-  background-color: #f3f3f3;
-}
+    /* Fieldset and form */
+    fieldset {
+      margin-bottom: 1em;
+      padding: 1ex;
+      border: 1px solid #ccc;
+    }
+    legend {
+      font-weight: bold;
+      padding: 0 0.5em;
+    }
 
-.description {
-  font-style: italic;
-  color: #555;
-  margin-bottom: 1em;
-}
+    /* Form input and layout */
+    textarea,
+    input[type="url"],
+    input[type="text"],
+    select {
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #f3f3f3;
+    }
 
-/* Emphasized text */
-em {
-  color: black;
-  font-weight: bold;
-}
+    .description {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 1em;
+    }
 
-/* Inline layout for info fields */
-.basic-line,
-.language-line {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1em;
-}
-.basic-line label,
-.language-line label {
-  width: 25ex;
-  font-weight: bold;
-}
-.basic-line input,
-.language-line input,
-.basic-line select,
-.language-line select {
-  flex: 1;
-  padding: 0.4em;
-  box-sizing: border-box;
-}
+    /* Emphasized text */
+    em {
+      color: black;
+      font-weight: bold;
+    }
 
-/* Education table */
-.education-table {
-  border-collapse: collapse;
-  margin-top: 1em;
-}
-.education-table th,
-.education-table td {
-  padding: 0.6em;
-  text-align: left;
-  border: none;
-}
-.education-table th:nth-child(1),
-.education-table td:nth-child(1) {
-  width: 15ex;
-}
-.education-table select {
-  width: 10ex;
-}
-.education-table input[type="text"] {
-  width: 20ex;
-}
+    /* Inline layout for info fields */
+    .basic-line,
+    .language-line {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1em;
+    }
+    .basic-line label,
+    .language-line label {
+      width: 25ex;
+      font-weight: bold;
+    }
+    .basic-line input,
+    .language-line input,
+    .basic-line select,
+    .language-line select {
+      flex: 1;
+      padding: 0.4em;
+      box-sizing: border-box;
+    }
 
-/* Candidate supervisor options */
-.candidate-option {
-  display: flex;
-  align-items: center;
-  padding: 0.8em 0;
-  border-bottom: 1px solid #ddd;
-}
-.candidate-option input[type="radio"] {
-  margin-right: 1em;
-  vertical-align: middle;
-}
-.candidate-name {
-  font-weight: bold;
-  margin-right: 1ex;
-  width: 20ex;
-}
-.viewDetailsBtn {
-  background-color: #951b81;
-  color: #fff;
-  border: none;
-  padding: 0.4em 0.8em;
-  cursor: pointer;
-  border-radius: 0.3em;
-  font-size: 0.9em;
-  transition: background-color 0.2s ease;
-}
-.viewDetailsBtn:hover {
-  background-color: #951b81;
-  color: #f9b234;
-}
-.candidate-details {
-  margin: 0.8em 0 0 3em;
-  padding: 0.8em;
-  border-left: 0.2em solid #ccc;
-  display: none;
-  font-size: 0.9em;
-}
+    /* Education table */
+    .education-table {
+      border-collapse: collapse;
+      margin-top: 1em;
+    }
+    .education-table th,
+    .education-table td {
+      padding: 0.6em;
+      text-align: left;
+      border: none;
+    }
+    .education-table th:nth-child(1),
+    .education-table td:nth-child(1) {
+      width: 15ex;
+    }
+    .education-table select {
+      width: 10ex;
+    }
+    .education-table input[type="text"] {
+      width: 20ex;
+    }
 
-/* Restore yellow highlight for supervisors and self-evaluation */
-#supervisors .candidate-name,
-#self-evaluation fieldset legend {
-  padding: 0.2em 0.6em;
-  border-radius: 0.4em;
-}
+    /* Candidate supervisor options */
+    .candidate-option {
+      display: flex;
+      align-items: center;
+      padding: 1ex 0 0 0;
+    }
+    .candidate-option input[type="radio"] {
+      margin-right: 1em;
+      vertical-align: middle;
+    }
+    .candidate-name {
+      font-weight: bold;
+      margin-right: 1ex;
+      width: 20ex;
+    }
+    .viewDetailsBtn {
+      background-color: #951b81;
+      color: #fff;
+      border: none;
+      padding: 0.4em 0.8em;
+      cursor: pointer;
+      border-radius: 0.3em;
+      transition: background-color 0.2s ease;
+    }
+    .viewDetailsBtn:hover {
+      background-color: #951b81;
+      color: #f9b234;
+    }
+    .candidate-details {
+      margin: 0;
+      padding: 0 0 0 5ex;
+      display: none;
+    }
 
-/* Ensure block display of self-evaluation checkboxes */
-#self-evaluation label {
-  display: block;
-  margin: 0.4em 0;
-}
+    /* Restore yellow highlight for supervisors and self-evaluation */
+    #supervisors .candidate-name,
+    #self-evaluation fieldset legend {
+      padding: 0.2em 0.6em;
+      border-radius: 0.4em;
+    }
 
-/* Remove highlight from labels in CV and Questions tabs */
-#supervisors label:hover,
-#self-evaluation label:hover {
-  background-color: #f9b234;
-}
+    /* Ensure block display of self-evaluation checkboxes */
+    #self-evaluation label {
+      display: block;
+      margin: 0.4em 0;
+    }
 
-/* Buttons */
-button {
-  background-color: #444;
-  color: #fff;
-  border: none;
-  border-radius: 0.3em;
-  padding: 0.8em 1.6em;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-button:hover {
-  background-color: #666;
-}
+    /* Remove highlight from labels in CV and Questions tabs */
+    #supervisors label:hover,
+    #self-evaluation label:hover {
+      background-color: #f9b234;
+    }
 
-/* Mobile styles */
-@media (max-width: 600px) {
-  body, input, select, textarea, button,
-  h1, h2, h3, h4, h5, h6,
-  p, label, legend, input, nav, ul, li, a {
-    font-size: 16px;
-    font-family: sans-serif;
-    line-height: 1.5;
-    box-sizing: border-box;
-  }
-}
+    /* Buttons */
+    button {
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 0.3em;
+      padding: 0.8em 1.6em;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    button:hover {
+      background-color: #666;
+    }
 
-/* Print summary only */
-@media print {
-  nav, #title {
-    display: none !important;
-  }
-  #summary {
-    display: block !important;
-  }
-}
-</style>
+    /* Mobile styles */
+    @media (max-width: 600px) {
+      body, input, select, textarea, button,
+      p, label, legend, input, nav, ul, li, a {
+        font-size: 16px;
+        font-family: sans-serif;
+        line-height: 1.5;
+        box-sizing: border-box;
+      }
+    }
 
-
-
-
-
+    /* Print summary only */
+    @media print {
+      nav, #title {
+        display: none !important;
+      }
+      #summary {
+        display: block !important;
+      }
+    }
+  </style>
 </head>
+
+
+
 <body>
   <!-- Horizontal Menu -->
   <nav class="clearfix">
@@ -288,7 +280,7 @@ button:hover {
 
   <div id="supervisors" class="tab-content">
     <h2>Potential supervisors</h2>
-    <p>Please choose a suitable supervisor</p>
+    <p>Please choose a suitable supervisor.</p>
     <fieldset data-topic="Supervisor Options">
         <legend>Supervisors with profiles</legend>
         <div class="candidate-option">
@@ -1701,42 +1693,42 @@ button:hover {
       <legend>Answer eight questions</legend>
 
       <p>
-        <label for="competencies">A. Considering your ResearchCOMP self-evaluation, describe 3 competencies that you aim to strengthen during your postdoc in Estonia.</label><br>
+        <label for="competencies"><strong>A.</strong> Considering your ResearchCOMP self-evaluation, describe 3 competencies that you aim to strengthen during your postdoc in Estonia.</label><br>
         <textarea id="competencies" name="competencies" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
       </p>
 
       <p>
-        <label for="motivationEstonia">B. Provide 1 reason why you would like to do a postdoc at TalTech in Estonia in the context of your future career goal.</label><br>
+        <label for="motivationEstonia"><strong>B.</strong> Provide 1 reason why you would like to do a postdoc at TalTech in Estonia in the context of your future career goal.</label><br>
         <textarea id="motivationEstonia" name="motivationEstonia" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
       </p>
 
       <p>
-        <label for="careerGoal">C. Considering your ResearchCOMP self-evaluation, describe your primary career goal – a targeted position – after the postdoc in Estonia.</label><br>
+        <label for="careerGoal"><strong>C.</strong> Considering your ResearchCOMP self-evaluation, describe your primary career goal – a targeted position – after the postdoc in Estonia.</label><br>
         <textarea id="careerGoal" name="careerGoal" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
       </p>
 
       <p>
-        <label for="applicationsExperience">D. Describe your experience preparing applications for scholarships, fellowships, grants, or competitions/awards.</label><br>
+        <label for="applicationsExperience"><strong>D.</strong> Describe your experience preparing applications for scholarships, fellowships, grants, or competitions/awards.</label><br>
         <textarea id="applicationsExperience" name="applicationsExperience" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
       </p>
 
       <p>
-        <label for="phdSupervisorStyle">E. Name your PhD supervisor(s) and describe their style of research, mentoring, and management by bringing example of your PhD group's activities and traditions.</label><br>
+        <label for="phdSupervisorStyle"><strong>E.</strong> Name your PhD supervisor(s) and describe their style of research, mentoring, and management by bringing example of your PhD group's activities and traditions.</label><br>
         <textarea id="phdSupervisorStyle" name="phdSupervisorStyle" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
       </p>
 
       <p>
-        <label for="multiculturalExperience">F. Provide 1 example of your experience of working in a multicultural setting unrelated to your PhD group.</label><br>
+        <label for="multiculturalExperience"><strong>F.</strong> Provide 1 example of your experience of working in a multicultural setting unrelated to your PhD group.</label><br>
         <textarea id="multiculturalExperience" name="multiculturalExperience" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
       </p>
 
       <p>
-        <label for="problemSolving">G. Provide 1 example where you demonstrated problem-solving skills in research or related areas.</label><br>
+        <label for="problemSolving"><strong>G.</strong> Provide 1 example where you demonstrated problem-solving skills in research or related areas.</label><br>
         <textarea id="problemSolving" name="problemSolving" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
       </p>
 
       <p>
-        <label for="publicationRole">H. Describe and explain your role in a selected publication of yours.</label><br>
+        <label for="publicationRole"><strong>H.</strong> Describe and explain your role in a selected publication of yours.</label><br>
         <textarea id="publicationRole" name="publicationRole" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
       </p>
 
@@ -1749,227 +1741,180 @@ button:hover {
   <div id="submit" class="tab-content">
     <div id="title">
       <h2>Summary</h2>
-      <button id="copySummaryBtn">📋 COPY THE SUMMARY</button> <button id="sendEmailBtn">✉️ EMAIL THE SUMMARY</button> <button id="downloadHtmlBtn">💾 SAVE FILE WITH ANSWERS</button>
+      <button id="copySummaryBtn">📋 COPY THE SUMMARY</button> <button onclick="sendEmailJS()" >✉️ EMAIL THE SUMMARY</button> <button id="downloadHtmlBtn">💾 SAVE FILE WITH ANSWERS</button>
     </div>
     <div id="summary"></div>
   </div>
 
 
 
-
-
-
 <script>
-    /* ===================================================================
-       Tab Switching Functionality
-       =================================================================== */
-    const menuLinks = document.querySelectorAll("nav ul li a");
-    menuLinks.forEach(link => {
-        link.addEventListener("click", function(e) {
-            e.preventDefault();
-            // Remove active class from all links and hide all tabs
-            menuLinks.forEach(item => item.classList.remove("active"));
-            document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
-            // Activate the clicked link and its corresponding tab
-            this.classList.add("active");
-            const target = this.getAttribute("data-target");
-            document.getElementById(target).classList.add("active");
-            // When the submit tab is activated, generate the summary
-            if (target === "submit") {
-                generateSummary();
-            }
-        });
+  // ==================== Tab Switching ====================
+  document.querySelectorAll("nav ul li a").forEach(link => {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.querySelectorAll("nav ul li a").forEach(item => item.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
+      this.classList.add("active");
+      const target = this.getAttribute("data-target");
+      document.getElementById(target).classList.add("active");
+      if (target === "submit") generateSummary();
     });
+  });
 
-    /* ===================================================================
-       Function: generateSummary
-       Purpose: Construct a summary with the following sections:
-         1. Basic CV Information
-         2. Education & Experience (only for "Current" and "PhD student")
-         3. Languages Information
-         4. Candidate Responses for Eight Questions
-         5. Self-Evaluation Selections
-       =================================================================== */
-    function generateSummary() {
-        let summaryHTML = "";
+  // ==================== Supervisor Profile Toggle ====================
+  document.querySelectorAll(".viewDetailsBtn").forEach(button => {
+    button.addEventListener("click", function () {
+      const targetId = this.getAttribute("data-target");
+      const detailElem = document.getElementById(targetId);
+      if (!detailElem) return;
+      const isVisible = detailElem.style.display === "block";
+      document.querySelectorAll(".candidate-details").forEach(el => el.style.display = "none");
+      detailElem.style.display = isVisible ? "none" : "block";
+    });
+  });
 
-        // 1. Basic CV Information
-        const firstName = document.getElementById("firstName") ? document.getElementById("firstName").value.trim() : "";
-        const familyName = document.getElementById("familyName") ? document.getElementById("familyName").value.trim() : "";
-        const googleScholar1 = document.getElementById("googleScholar1") ? document.getElementById("googleScholar1").value.trim() : "";
-        const googleScholar2 = document.getElementById("googleScholar2") ? document.getElementById("googleScholar2").value.trim() : "";
-        if (firstName || familyName || googleScholar1 || googleScholar2) {
-            summaryHTML += "<h3>Basic CV Information</h3><ul>";
-            if (firstName) summaryHTML += "<li><strong>First Name:</strong> " + firstName + "</li>";
-            if (familyName) summaryHTML += "<li><strong>Family Name:</strong> " + familyName + "</li>";
-            if (googleScholar1) {
-                summaryHTML += "<li><strong>Your Google Scholar:</strong> <a href='" + googleScholar1 + "' target='_blank'>" + googleScholar1 + "</a></li>";
-            }
-            if (googleScholar2) {
-                summaryHTML += "<li><strong>Your supervisor's profile:</strong> <a href='" + googleScholar2 + "' target='_blank'>" + googleScholar2 + "</a></li>";
-            }
-            summaryHTML += "</ul>";
+  // ==================== Generate Summary ====================
+  function generateSummary() {
+    let summaryHTML = "";
+
+    // Basic CV Information
+    const fields = [
+      { id: "firstName", label: "First Name" },
+      { id: "familyName", label: "Family Name" },
+      { id: "googleScholar1", label: "Your Google Scholar", link: true },
+      { id: "googleScholar2", label: "Your supervisor's profile", link: true }
+    ];
+    let cvHTML = fields.map(({ id, label, link }) => {
+      const el = document.getElementById(id);
+      if (el && el.value.trim()) {
+        return `<li><strong>${label}:</strong> ${link ? `<a href='${el.value.trim()}' target='_blank'>${el.value.trim()}</a>` : el.value.trim()}</li>`;
+      }
+      return "";
+    }).join("");
+    if (cvHTML) summaryHTML += `<h3>Basic CV Information</h3><ul>${cvHTML}</ul>`;
+
+    // Education
+    const eduFieldset = document.querySelector('#cv-details fieldset[data-topic="Education and Experience"]');
+    if (eduFieldset) {
+      const rows = eduFieldset.querySelectorAll("tbody tr");
+      let eduHTML = "";
+      rows.forEach(row => {
+        const cells = row.querySelectorAll("td");
+        const position = cells[0]?.textContent.trim().toLowerCase();
+        if (["current", "phd student"].includes(position)) {
+          const startYear = cells[1]?.querySelector("select")?.value || "";
+          const endYear = cells[2]?.querySelector("select")?.value || "";
+          const affiliation = cells[3]?.querySelector("input")?.value.trim() || "";
+          eduHTML += `<li><strong>${position}:</strong> Start Year: ${startYear || "N/A"}${endYear ? ", End Year: " + endYear : ""}${affiliation ? ", Affiliation: " + affiliation : ""}</li>`;
         }
+      });
+      if (eduHTML) summaryHTML += `<h3>Education & Experience</h3><ul>${eduHTML}</ul>`;
+    }
 
-        // 2. Education & Experience Summary (only "Current" and "PhD student" rows)
-        const eduFieldset = document.querySelector('#cv-details fieldset[data-topic="Education and Experience"]');
-        if (eduFieldset) {
-            let eduHTML = "";
-            const rows = eduFieldset.querySelectorAll("tbody tr");
-            rows.forEach(row => {
-                const cells = row.querySelectorAll("td");
-                if (cells.length >= 4) {
-                    const position = cells[0].textContent.trim().toLowerCase();
-                    if (position === "current" || position === "phd student") {
-                        const startYear = cells[1].querySelector("select") ? cells[1].querySelector("select").value : "";
-                        const endYear = cells[2].querySelector("select") ? cells[2].querySelector("select").value : "";
-                        const affiliation = cells[3].querySelector("input") ? cells[3].querySelector("input").value.trim() : "";
-                        eduHTML += "<li><strong>" + cells[0].textContent.trim() + ":</strong> " +
-                                   "Start Year: " + (startYear || "N/A") +
-                                   (endYear ? ", End Year: " + endYear : "") +
-                                   (affiliation ? ", Affiliation: " + affiliation : "") +
-                                   "</li>";
-                    }
-                }
-            });
-            if (eduHTML !== "") {
-                summaryHTML += "<h3>Education & Experience</h3><ul>" + eduHTML + "</ul>";
-            }
-        }
+    // Languages
+    const englishLevel = document.getElementById("englishLevel")?.value.trim();
+    const motherTongue = document.getElementById("motherTongue")?.value.trim();
+    if (englishLevel || motherTongue) {
+      summaryHTML += `<h3>Languages</h3><ul>${englishLevel ? `<li><strong>English:</strong> ${englishLevel}</li>` : ""}${motherTongue ? `<li><strong>Mother Tongue:</strong> ${motherTongue}</li>` : ""}</ul>`;
+    }
 
-        // 3. Languages Information
-        const englishLevel = document.getElementById("englishLevel") ? document.getElementById("englishLevel").value.trim() : "";
-        const motherTongue = document.getElementById("motherTongue") ? document.getElementById("motherTongue").value.trim() : "";
-        if (englishLevel || motherTongue) {
-            summaryHTML += "<h3>Languages</h3><ul>";
-            if (englishLevel) {
-                summaryHTML += "<li><strong>English:</strong> " + englishLevel + "</li>";
-            }
-            if (motherTongue) {
-                summaryHTML += "<li><strong>Mother Tongue:</strong> " + motherTongue + "</li>";
-            }
-            summaryHTML += "</ul>";
-        }
+    // Candidate Responses
+    const questionIDs = [
+      "competencies", "motivationEstonia", "careerGoal", "applicationsExperience",
+      "phdSupervisorStyle", "multiculturalExperience", "problemSolving", "publicationRole"
+    ];
+    let responsesHTML = "";
+    questionIDs.forEach(id => {
+      const el = document.getElementById(id);
+      const label = document.querySelector(`label[for="${id}"]`);
+      if (el && el.value.trim()) {
+        responsesHTML += `<p><strong>${label?.textContent || "Question"}</strong><br>${el.value.trim()}</p>`;
+      }
+    });
+    if (responsesHTML) summaryHTML += `<h3>Candidate Responses</h3>${responsesHTML}`;
 
-        // 4. Candidate Responses for Eight Questions
-        const questionIDs = [
-            "competencies",
-            "motivationEstonia",
-            "careerGoal",
-            "applicationsExperience",
-            "phdSupervisorStyle",
-            "multiculturalExperience",
-            "problemSolving",
-            "publicationRole"
-        ];
-        let responsesHTML = "";
-        questionIDs.forEach(qid => {
-            const textarea = document.getElementById(qid);
-            if (textarea) {
-                const answer = textarea.value.trim();
-                if (answer !== "") {
-                    const labelElem = document.querySelector('label[for="' + qid + '"]');
-                    const questionText = labelElem ? labelElem.textContent.trim() : ("Question");
-                    responsesHTML += "<p><strong>" + questionText + "</strong><br>" + answer + "</p>";
-                }
-            }
+    // Self-evaluation
+    const selfEvalFieldsets = document.querySelectorAll("#self-evaluation fieldset");
+    let selfEvalHTML = "";
+    selfEvalFieldsets.forEach(fieldset => {
+      const topic = fieldset.getAttribute("data-topic") || fieldset.querySelector("legend")?.textContent || "Subtopic";
+      const checked = fieldset.querySelectorAll("input[type='checkbox']:checked");
+      if (checked.length) {
+        selfEvalHTML += `<h4>${topic}</h4><ul>`;
+        checked.forEach(cb => {
+          selfEvalHTML += `<li>${cb.value} (${cb.getAttribute("data-level")})</li>`;
         });
-        if (responsesHTML !== "") {
-            summaryHTML += "<h3>Candidate Responses</h3>" + responsesHTML;
-        }
+        selfEvalHTML += "</ul>";
+      }
+    });
+    if (selfEvalHTML) summaryHTML += `<h3>Self-Evaluation</h3>${selfEvalHTML}`;
 
-        // 5. Self-Evaluation Summary from "self-evaluation" tab
-        const selfEvalFieldsets = document.querySelectorAll("#self-evaluation fieldset");
-        let selfEvalHTML = "";
-        selfEvalFieldsets.forEach(fieldset => {
-            const topic = fieldset.getAttribute("data-topic") || (fieldset.querySelector("legend") ? fieldset.querySelector("legend").textContent : "Subtopic");
-            const checkboxes = fieldset.querySelectorAll("input[type='checkbox']:checked");
-            if (checkboxes.length > 0) {
-                selfEvalHTML += "<h4>" + topic + "</h4><ul>";
-                checkboxes.forEach(cb => {
-                    selfEvalHTML += "<li>" + cb.value + " (" + cb.getAttribute("data-level") + ")</li>";
-                });
-                selfEvalHTML += "</ul>";
-            }
-        });
-        if (selfEvalHTML !== "") {
-            summaryHTML += "<h3>Self-Evaluation</h3>" + selfEvalHTML;
-        }
+    // Output
+    document.getElementById("summary").innerHTML = summaryHTML;
+  }
 
-        // Set the generated summary into the summary div
-        document.getElementById("summary").innerHTML = summaryHTML;
+  // ==================== Copy Summary ====================
+  function copySummary() {
+    const summaryElem = document.getElementById("summary");
+    const summaryText = summaryElem?.innerText || "";
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(summaryText);
+    } else {
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.selectNodeContents(summaryElem);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand("copy");
+      selection.removeAllRanges();
     }
+  }
 
-    /* ===================================================================
-       Function: copySummary
-       Purpose: Copy summary text to the clipboard.
-       =================================================================== */
-    function copySummary() {
-        const summaryElem = document.getElementById("summary");
-        if (!summaryElem) return;
-        const summaryText = summaryElem.innerText;
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(summaryText);
-        } else {
-            const selection = window.getSelection();
-            const range = document.createRange();
-            range.selectNodeContents(summaryElem);
-            selection.removeAllRanges();
-            selection.addRange(range);
-            document.execCommand("copy");
-            selection.removeAllRanges();
-        }
-    }
+  // ==================== Email Summary ====================
+  emailjs.init("NFXPe5qDjU1-bVYW7"); // Replace with your actual user ID
 
-    /* ===================================================================
-       Function: sendSummaryEmail
-       Purpose: Open the user's email client with the summary prefilled,
-                sending to leonetta.pavanello@gmail.com.
-       =================================================================== */
-    function sendSummaryEmail() {
-        const summaryElem = document.getElementById("summary");
-        if (!summaryElem) return;
-        const summaryText = summaryElem.innerText;
-        const subject = encodeURIComponent("TalTech 2025 candidate");
-        const body = encodeURIComponent(summaryText);
-        const mailtoLink = "mailto:leonetta.pavanello@gmail.com?subject=" + subject + "&body=" + body;
-        window.location.href = mailtoLink;
-    }
+  function sendSummaryEmail() {
+    const summaryElem = document.getElementById("summary");
+    if (!summaryElem) return;
 
-    /* ===================================================================
-       Function: downloadSummaryFile
-       Purpose: Download an HTML file containing the generated summary.
-       =================================================================== */
-    function downloadSummaryFile() {
-        const summaryElem = document.getElementById("summary");
-        if (!summaryElem) return;
-        const docString = "<!DOCTYPE html>\n<html><head><meta charset='UTF-8'><title>TalTech 2025 candidate</title></head><body>" + summaryElem.outerHTML + "</body></html>";
-        const blob = new Blob([docString], { type: "text/html" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "ResearchComp_Summary.html";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
+    const summaryText = summaryElem.innerText;
+    const firstName = document.getElementById("firstName")?.value.trim() || "";
+    const familyName = document.getElementById("familyName")?.value.trim() || "";
+    const fullName = `${firstName} ${familyName}`.trim();
+    const subjectTitle = "TalTech 2025 candidate";
 
-    /* ===================================================================
-       Attach Event Listeners to Action Buttons
-       =================================================================== */
-    const copyBtn = document.getElementById("copySummaryBtn");
-    if (copyBtn) {
-        copyBtn.addEventListener("click", copySummary);
-    }
-    const emailBtn = document.getElementById("sendEmailBtn");
-    if (emailBtn) {
-        emailBtn.addEventListener("click", sendSummaryEmail);
-    }
-    const downloadBtn = document.getElementById("downloadHtmlBtn");
-    if (downloadBtn) {
-        downloadBtn.addEventListener("click", downloadSummaryFile);
-    }
+    emailjs.send("service_s3df35x", "template_1aerpa8", {
+      name: fullName,
+      summary: summaryText,
+      title: subjectTitle
+    });
+  }
+
+  const emailBtn = document.getElementById("sendEmailBtn");
+  if (emailBtn) {
+    emailBtn.addEventListener("click", sendSummaryEmail);
+  }
+
+  // ==================== Download Summary ====================
+  function downloadSummaryFile() {
+    const summaryElem = document.getElementById("summary");
+    const content = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>TalTech 2025 candidate</title></head><body>" + summaryElem?.outerHTML + "</body></html>";
+    const blob = new Blob([content], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "ResearchComp_Summary.html";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  // ==================== Button Event Listeners ====================
+  document.getElementById("copySummaryBtn")?.addEventListener("click", copySummary);
+  document.getElementById("sendEmailBtn")?.addEventListener("click", sendSummaryEmail);
+  document.getElementById("downloadHtmlBtn")?.addEventListener("click", downloadSummaryFile);
 </script>
 
 
