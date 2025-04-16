@@ -1728,34 +1728,33 @@
     });
   });
 
-// ==================== Generate Summary ====================
-function generateSummary() {
-  let summaryHTML = "";
+  // ==================== Generate Summary ====================
+  function generateSummary() {
+    let summaryHTML = "";
 
-  // Basic CV Information
-  const emailAddress = document.getElementById("emailAddress")?.value.trim();
-  const fields = [
-    { id: "firstName", label: "First Name" },
-    { id: "familyName", label: "Family Name" },
-    { id: "googleScholar1", label: "Your Google Scholar", link: true },
-    { id: "googleScholar2", label: "Your PhD supervisor's profile", link: true }
-  ];
+    // Basic CV Information
+    const emailAddress = document.getElementById("emailAddress")?.value.trim();
+    const fields = [
+      { id: "firstName", label: "First Name" },
+      { id: "familyName", label: "Family Name" },
+      { id: "googleScholar1", label: "Your Google Scholar", link: true },
+      { id: "googleScholar2", label: "Your PhD supervisor's profile", link: true }
+    ];
 
-  let cvHTML = "";
-  if (emailAddress) {
-    cvHTML += `<li><strong>Email:</strong> ${emailAddress}</li>`;
-  }
-
-  cvHTML += fields.map(({ id, label, link }) => {
-    const el = document.getElementById(id);
-    if (el && el.value.trim()) {
-      return `<li><strong>${label}:</strong> ${link ? `<a href='${el.value.trim()}' target='_blank'>${el.value.trim()}</a>` : el.value.trim()}</li>`;
+    let cvHTML = "";
+    if (emailAddress) {
+      cvHTML += `<li><strong>Email:</strong> ${emailAddress}</li>`;
     }
-    return "";
-  }).join("");
 
-  if (cvHTML) summaryHTML += `<h3>Basic CV Information</h3><ul>${cvHTML}</ul>`;
-}
+    cvHTML += fields.map(({ id, label, link }) => {
+      const el = document.getElementById(id);
+      if (el && el.value.trim()) {
+        return `<li><strong>${label}:</strong> ${link ? `<a href='${el.value.trim()}' target='_blank'>${el.value.trim()}</a>` : el.value.trim()}</li>`;
+      }
+      return "";
+    }).join("");
+
+    if (cvHTML) summaryHTML += `<h3>Basic CV Information</h3><ul>${cvHTML}</ul>`;
 
     // Education
     const eduFieldset = document.querySelector('#cv-details fieldset[data-topic="Education and Experience"]');
@@ -1857,23 +1856,23 @@ function generateSummary() {
   // ==================== Submit Email Summary ====================
   document.getElementById("emailForm").addEventListener("submit", function (event) {
     event.preventDefault();
-  
+
     const summaryElem = document.getElementById("summary");
     if (!summaryElem) return;
-  
+
     // Get the summary content and candidate name
     const summaryText = summaryElem.innerText || "";
     const firstName = document.getElementById("firstName")?.value.trim() || "";
     const familyName = document.getElementById("familyName")?.value.trim() || "";
     const fullName = `${firstName} ${familyName}`.trim();
-  
+
     // Inject values into hidden fields for the form
     document.getElementById("emailSummary").value = summaryText;
     document.getElementById("emailName").value = fullName;
     document.getElementById("emailTitle").value = "TalTech 2025 candidate"; // Set title if not already
-  
+
     const note = document.getElementById("emailNotification");
-  
+
     // Send the form using EmailJS
     emailjs.sendForm("service_2b0sdqa", "template_1aerpa8", this)
       .then(() => {
