@@ -6,6 +6,10 @@
   <meta name="author" content="Vladislav Ivanistsev, OpenAI ChatGPT o3 Model" />
 
   <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    emailjs.init("NFXPe5qDjU1-bVYW7");
+  </script>
+
 
   <style>
     /* Base styles */
@@ -58,7 +62,7 @@
     img {
       float: left;
       margin: 0 1em 1em 0;
-      width: 200px
+      width: 200px;
       height: 200px;
     }
 
@@ -127,7 +131,7 @@
     }
     .basic-line label,
     .language-line label {
-      width: 25ex;
+      width: 35ex;
       font-weight: bold;
     }
     .basic-line input,
@@ -135,7 +139,7 @@
     .basic-line select,
     .language-line select {
       flex: 1;
-      padding: 0.4em;
+      padding: 1ex;
       box-sizing: border-box;
     }
 
@@ -279,8 +283,7 @@
   </div>
 
   <div id="supervisors" class="tab-content">
-    <h2>Potential supervisors</h2>
-    <p>Please choose a suitable supervisor.</p>
+  <p>Please choose a suitable supervisor.</p>
     <fieldset data-topic="Supervisor Options">
         <legend>Supervisors with profiles</legend>
         <div class="candidate-option">
@@ -361,7 +364,6 @@
 
   <!-- ResearchComp tab  -->
   <div id="self-evaluation" class="tab-content">
-    <h2>European competence framework</h2>
     <p>
     Evaluate your competences according to the European competence framework in (1) Managing research, (2) Making an impact, (3) Self-management, (4) Cognitive abilities, (5) Working with others, (6) Managing research tools, and (7) Doing research. Select only those competencies for which you can imagine 1–3 examples of how you applied them in the past. This analysis is useful as it can ensure more than 5% of your future application’s evaluation.
     </p>
@@ -1561,15 +1563,14 @@
   </div>
 
 <div id="cv-details" class="tab-content">
-    <h2>CV-details</h2>
     <fieldset data-topic="Basic Info">
         <legend>Basic CV information</legend>
         <div class="basic-line">
-            <label for="firstName">First Name:</label>
+            <label for="firstName">Your first name:</label>
             <input type="text" id="firstName" name="firstName" maxlength="100" placeholder="Your first name">
         </div>
         <div class="basic-line">
-            <label for="familyName">Family Name:</label>
+            <label for="familyName">Your family Name:</label>
             <input type="text" id="familyName" name="familyName" maxlength="100" placeholder="Your family name">
         </div>
         <div class="basic-line">
@@ -1577,94 +1578,41 @@
             <input type="url" id="googleScholar1" name="googleScholar1" placeholder="https://scholar.google.com/...">
         </div>
         <div class="basic-line">
-            <label for="googleScholar2">Your supervisor' profile:</label>
+            <label for="googleScholar2">Your PhD supervisor' profile:</label>
+            <input type="url" id="googleScholar2" name="googleScholar2" placeholder="https://scholar.google.com/... or https://orcid.org/... or https://www.webofscience.com/...">
+        </div>
+        <div class="basic-line">
+            <label for="googleScholar3">Your PostDoc supervisor' profile:<br/>(if applicable)</label>
             <input type="url" id="googleScholar2" name="googleScholar2" placeholder="https://scholar.google.com/... or https://orcid.org/... or https://www.webofscience.com/...">
         </div>
     </fieldset>
 
-    <fieldset data-topic="Education and Experience">
-        <legend>Education &amp; working experience</legend>
-        <table class="education-table">
-            <thead>
-                <tr>
-                    <th>Position</th>
-                    <th>Start Year</th>
-                    <th>End Year</th>
-                    <th>Affiliation</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Row 1 -->
-                <tr>
-                    <td>
-                        Current
-                    </td>
-                    <td>
-                        <select name="startYear1">
-                            <option value="">--Select--</option>
-                            <option>2025</option>
-                            <option>2024</option>
-                            <option>2023</option>
-                            <option>2022</option>
-                            <option>2021</option>
-                            <option>2020</option>
-                            <option>2019</option>
-                            <option>2018</option>
-                            <option>2017</option>
-                            <option>2016</option>
-                            <option>2015</option>
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input type="text" name="affiliation1" maxlength="200" placeholder="Affiliation">
-                    </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr>
-                    <td>
-                        PhD student
-                    </td>
-                    <td>
-                        <select name="startYear2">
-                            <option value="">--Select--</option>
-                            <option>2023</option>
-                            <option>2022</option>
-                            <option>2021</option>
-                            <option>2020</option>
-                            <option>2019</option>
-                            <option>2018</option>
-                            <option>2017</option>
-                            <option>2016</option>
-                            <option>2015</option>
-                            <option>2014</option>
-                            <option>2013</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select name="endYear2">
-                            <option value="">--Select--</option>
-                            <option>2025</option>
-                            <option>2024</option>
-                            <option>2023</option>
-                            <option>2022</option>
-                            <option>2021</option>
-                            <option>2020</option>
-                            <option>2019</option>
-                            <option>2018</option>
-                            <option>2017</option>
-                            <option>2016</option>
-                            <option>2015</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" name="affiliation2" maxlength="200" placeholder="Affiliation">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Work Experience -->
+    <fieldset data-topic="Work Experience">
+      <legend>Work experience</legend>
+      <div class="basic-line">
+        <label for="currentAffiliation">Current Position:</label>
+        <input type="text" id="currentAffiliation" name="currentAffiliation" placeholder="University or company, etc" maxlength="200">
+      </div>
     </fieldset>
+
+    <!-- Education -->
+    <fieldset data-topic="Education">
+      <legend>PhD education</legend>
+      <div class="basic-line">
+        <label for="phdAffiliation">PhD position:</label>
+        <input type="text" id="phdAffiliation" name="phdAffiliation" placeholder="University or institution" maxlength="200">
+      </div>
+      <div class="basic-line">
+        <label for="phdDefenceDate">PhD defence date:</label>
+        <input type="date" id="phdDefenceDate" name="phdDefenceDate">
+      </div>
+      <div class="basic-line">
+        <label for="phdCountry">Country:</label>
+        <input type="text" id="phdCountry" name="phdCountry" placeholder="Country" maxlength="100">
+      </div>
+    </fieldset>
+
 
     <fieldset data-topic="Languages">
         <legend>Languages</legend>
@@ -1672,15 +1620,11 @@
             <label for="englishLevel">English:</label>
             <select id="englishLevel" name="englishLevel">
                 <option value="">--Select Level--</option>
-                <option value="B1">B1</option>
-                <option value="B2">B2</option>
-                <option value="C1">C1</option>
-                <option value="C2">C2</option>
+                <option value="B1">B1 intermediate</option>
+                <option value="B2">B2 upper-intermedidate</option>
+                <option value="C1">C1 advanced</option>
+                <option value="C2">C2 profecient</option>
             </select>
-        </div>
-        <div class="basic-line">
-            <label for="motherTongue">Mother Tongue:</label>
-            <input type="text" id="motherTongue" name="motherTongue" maxlength="200" placeholder="Your mother tongue">
         </div>
     </fieldset>
 </div>
@@ -1688,48 +1632,47 @@
 
   <!-- Questions tab -->
   <div id="questions" class="tab-content">
-    <h2>Questions</h2>
     <fieldset data-topic="Candidate Questions">
-      <legend>Answer eight questions</legend>
+      <legend>Questions</legend>
 
       <p>
-        <label for="competencies"><strong>A.</strong> Considering your ResearchCOMP self-evaluation, describe 3 competencies that you aim to strengthen during your postdoc in Estonia.</label><br>
-        <textarea id="competencies" name="competencies" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
+        <label for="competencies"><strong>A.</strong> Considering your self-evaluation, describe 3 competencies that you aim to strengthen during your postdoc in Estonia.</label><br>
+        <textarea id="competencies" name="competencies" rows="6" cols="60" maxlength="800" placeholder="Answer in less than 800 characters"></textarea>
       </p>
 
       <p>
         <label for="motivationEstonia"><strong>B.</strong> Provide 1 reason why you would like to do a postdoc at TalTech in Estonia in the context of your future career goal.</label><br>
-        <textarea id="motivationEstonia" name="motivationEstonia" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
+        <textarea id="motivationEstonia" name="motivationEstonia" rows="6" cols="60" maxlength="800" placeholder="Answer in less than 800 characters"></textarea>
       </p>
 
       <p>
-        <label for="careerGoal"><strong>C.</strong> Considering your ResearchCOMP self-evaluation, describe your primary career goal – a targeted position – after the postdoc in Estonia.</label><br>
-        <textarea id="careerGoal" name="careerGoal" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
+        <label for="careerGoal"><strong>C.</strong> Considering your self-evaluation, describe your primary career goal – a targeted position – after the postdoc in Estonia.</label><br>
+        <textarea id="careerGoal" name="careerGoal" rows="6" cols="60" maxlength="800" placeholder="Answer in less than 800 characters"></textarea>
       </p>
 
       <p>
         <label for="applicationsExperience"><strong>D.</strong> Describe your experience preparing applications for scholarships, fellowships, grants, or competitions/awards.</label><br>
-        <textarea id="applicationsExperience" name="applicationsExperience" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
+        <textarea id="applicationsExperience" name="applicationsExperience" rows="6" cols="60" maxlength="800" placeholder="Answer in less than 800 characters"></textarea>
       </p>
 
       <p>
-        <label for="phdSupervisorStyle"><strong>E.</strong> Name your PhD and PostDoc supervisor(s). Describe their style of research, mentoring, and management. Bring examples of your PhD and PostDoc groups' activities and traditions.</label><br>
-        <textarea id="phdSupervisorStyle" name="phdSupervisorStyle" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
+        <label for="phdSupervisorStyle"><strong>E.</strong> Name your PhD and PostDoc (in applicable) supervisor(s). Describe their style of research, mentoring, and management. Bring examples of your PhD and PostDoc groups' activities and traditions.</label><br>
+        <textarea id="phdSupervisorStyle" name="phdSupervisorStyle" rows="6" cols="60" maxlength="800" placeholder="Answer in less than 800 characters"></textarea>
       </p>
 
       <p>
-        <label for="multiculturalExperience"><strong>F.</strong> Provide 1 example of your experience of working in a multicultural setting unrelated to your PhD group.</label><br>
-        <textarea id="multiculturalExperience" name="multiculturalExperience" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
+        <label for="mobilityExperience"><strong>F.</strong> Provide information on your reearch mobility.</label><br>
+        <textarea id="mobilityExperience" name="mobilityExperience" rows="6" cols="60" maxlength="800" placeholder="Answer in less than 800 characters"></textarea>
       </p>
 
       <p>
         <label for="problemSolving"><strong>G.</strong> Provide 1 example where you demonstrated problem-solving skills in research or related areas.</label><br>
-        <textarea id="problemSolving" name="problemSolving" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
+        <textarea id="problemSolving" name="problemSolving" rows="6" cols="60" maxlength="800" placeholder="Answer in less than 800 characters"></textarea>
       </p>
 
       <p>
         <label for="publicationRole"><strong>H.</strong> Describe and explain your role in a selected publication of yours.</label><br>
-        <textarea id="publicationRole" name="publicationRole" rows="6" cols="60" maxlength="1500" placeholder="Answer in less than 200 words"></textarea>
+        <textarea id="publicationRole" name="publicationRole" rows="6" cols="60" maxlength="800" placeholder="Answer in less than 800 characters"></textarea>
       </p>
 
     </fieldset>
@@ -1745,7 +1688,7 @@
       <p id="emailNotification" style="display: none; font-weight: bold; margin-top: 1em;"></p>
     </div>
     <div>
-    <p>By clicking on the following buttons, you can copy summary to clickboard and save it as a file, or you can print it ctrl+p.</p>
+    <p>In case the submission by email fails, please send the summary to <a href="mailto:scibrick@gmail.com">scibrick@gmail.com</a>. You can copy summary to clickboard and save it as a file, or you can print it with ctrl+p.</p>
     <p><button id="copySummaryBtn">📋 COPY THE SUMMARY</button> <button id="downloadHtmlBtn">💾 SAVE FILE WITH ANSWERS</button></p>
     </div>
     <div id="summary"></div>
@@ -1788,7 +1731,7 @@
       { id: "firstName", label: "First Name" },
       { id: "familyName", label: "Family Name" },
       { id: "googleScholar1", label: "Your Google Scholar", link: true },
-      { id: "googleScholar2", label: "Your supervisor's profile", link: true }
+      { id: "googleScholar2", label: "Your PhD supervisor's profile", link: true }
     ];
     let cvHTML = fields.map(({ id, label, link }) => {
       const el = document.getElementById(id);
@@ -1876,39 +1819,44 @@
     }
   }
 
-  // ==================== Email Summary ====================
-  emailjs.init("NFXPe5qDjU1-bVYW7"); // Your public key
+// ==================== Email Summary ====================
+function sendSummaryEmail() {
+  const summaryElem = document.getElementById("summary");
+  if (!summaryElem) return;
 
-  function sendSummaryEmail() {
-    const summaryElem = document.getElementById("summary");
-    if (!summaryElem) return;
+  const summaryText = summaryElem.innerText;
+  const firstName = document.getElementById("firstName")?.value.trim() || "";
+  const familyName = document.getElementById("familyName")?.value.trim() || "";
+  const fullName = `${firstName} ${familyName}`.trim();
+  const subjectTitle = "TalTech 2025 candidate";
 
-    const summaryText = summaryElem.innerText;
-    const firstName = document.getElementById("firstName")?.value.trim() || "";
-    const familyName = document.getElementById("familyName")?.value.trim() || "";
-    const fullName = `${firstName} ${familyName}`.trim();
-    const subjectTitle = "TalTech 2025 candidate";
+  emailjs.send("service_q93q8ll", "template_1aerpa8", {
+    name: fullName,
+    summary: summaryText,
+    title: subjectTitle
+  })
+  .then(() => {
+    const note = document.getElementById("emailNotification");
+    if (note) {
+      note.innerText = "📨 Email sent successfully.";
+      note.style.color = "green";
+      note.style.display = "block";
+    }
+  })
+  .catch(() => {
+    const note = document.getElementById("emailNotification");
+    if (note) {
+      note.innerText = "❌ Failed to send email.";
+      note.style.color = "red";
+      note.style.display = "block";
+    }
+  });
+}
 
-    emailjs.send("service_s3df35x", "template_1aerpa8", {
-      name: fullName,
-      summary: summaryText,
-      title: subjectTitle
-    }).then(() => {
-      const note = document.getElementById("emailNotification");
-      if (note) {
-        note.textContent = "📨 Email sent successfully.";
-        note.style.cssText = "color: green; display: block;";
-      }
-    }).catch(() => {
-      const note = document.getElementById("emailNotification");
-      if (note) {
-        note.textContent = "❌ Failed to send email.";
-        note.style.cssText = "color: red; display: block;";
-      }
-    });
-  }
-
-  document.getElementById("sendEmailBtn")?.addEventListener("click", sendSummaryEmail);
+const emailBtn = document.getElementById("sendEmailBtn");
+if (emailBtn) {
+  emailBtn.addEventListener("click", sendSummaryEmail);
+}
 
 
   // ==================== Download Summary ====================
