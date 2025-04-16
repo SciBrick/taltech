@@ -6,47 +6,9 @@
   <meta name="author" content="Vladislav Ivanistsev, OpenAI ChatGPT o3 Model" />
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
   <script>
-  emailjs.init("NFXPe5qDjU1-bVYW7");
-
-  document.getElementById("emailForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const summaryElem = document.getElementById("summary");
-    if (!summaryElem) return;
-
-    // Get the summary content and candidate name
-    const summaryText = summaryElem.innerText || "";
-    const firstName = document.getElementById("firstName")?.value.trim() || "";
-    const familyName = document.getElementById("familyName")?.value.trim() || "";
-    const fullName = `${firstName} ${familyName}`.trim();
-
-    // Inject values into hidden fields for the form
-    document.getElementById("emailSummary").value = summaryText;
-    document.getElementById("emailName").value = fullName;
-
-    const note = document.getElementById("emailNotification");
-
-    // Send the form using EmailJS
-    emailjs.sendForm("service_2b0sdqa", "template_1aerpa8", this)
-      .then(() => {
-        if (note) {
-          note.innerText = "📨 Email sent successfully.";
-          note.style.color = "green";
-          note.style.display = "block";
-        }
-      })
-      .catch(() => {
-        if (note) {
-          note.innerText = "❌ Failed to send email.";
-          note.style.color = "red";
-          note.style.display = "block";
-        }
-      });
-  });
-</script>
-
+    emailjs.init("NFXPe5qDjU1-bVYW7");
+  </script>
 
 
 
@@ -1626,7 +1588,7 @@
         </div>
         <div class="basic-line">
             <label for="googleScholar3">Your PostDoc supervisor' profile:<br/>(if applicable)</label>
-            <input type="url" id="googleScholar2" name="googleScholar2" placeholder="https://scholar.google.com/... or https://orcid.org/... or https://www.webofscience.com/...">
+            <input type="urlf" id="googleScholar3" name="googleScholar3" placeholder="https://scholar.google.com/... or https://orcid.org/... or https://www.webofscience.com/...">
         </div>
     </fieldset>
 
@@ -1730,7 +1692,7 @@
       <form id="emailForm">
         <input type="hidden" name="title" id="emailTitle" value="TalTech 2025 candidate">
         <input type="hidden" name="name" id="emailName">
-        <textarea name="summary" id="emailSummary" style="display: none;"></textarea>
+        <input type="hidden" name="summary" id="emailSummary">
         <button type="submit" id="sendEmailBtn">✉️ EMAIL THE SUMMARY</button>
       </form>
       <p id="emailNotification" style="display: none; font-weight: bold; margin-top: 1em;"></p>
@@ -1895,6 +1857,43 @@ function generateSummary() {
   document.getElementById("copySummaryBtn")?.addEventListener("click", copySummary);
   document.getElementById("sendEmailBtn")?.addEventListener("click", sendSummaryEmail);
   document.getElementById("downloadHtmlBtn")?.addEventListener("click", downloadSummaryFile);
+
+  // ==================== Submit Email Summary ====================
+  document.getElementById("emailForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const summaryElem = document.getElementById("summary");
+    if (!summaryElem) return;
+
+    // Get the summary content and candidate name
+    const summaryText = summaryElem.innerText || "";
+    const firstName = document.getElementById("firstName")?.value.trim() || "";
+    const familyName = document.getElementById("familyName")?.value.trim() || "";
+    const fullName = `${firstName} ${familyName}`.trim();
+
+    // Inject values into hidden fields for the form
+    document.getElementById("emailSummary").value = summaryText;
+    document.getElementById("emailName").value = fullName;
+
+    const note = document.getElementById("emailNotification");
+
+    // Send the form using EmailJS
+    emailjs.sendForm("service_2b0sdqa", "template_1aerpa8", this)
+      .then(() => {
+        if (note) {
+          note.innerText = "📨 Email sent successfully.";
+          note.style.color = "green";
+          note.style.display = "block";
+        }
+      })
+      .catch(() => {
+        if (note) {
+          note.innerText = "❌ Failed to send email.";
+          note.style.color = "red";
+          note.style.display = "block";
+        }
+      });
+  });
 </script>
 
 
