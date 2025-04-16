@@ -1882,7 +1882,7 @@
       })
       .catch(() => {
         if (note) {
-          note.innerText = "❌ Failed to send email. Please send the summary to <a href="mailto:vladislav.ivanistsev@gmail.com">vladislav ivanistsev</a>. ";
+          note.innerHTML = `❌ Failed to send email. Please send the summary to <a href="mailto:vladislav.ivanistsev@gmail.com">vladislav ivanistsev</a>.`;
           note.style.color = "red";
           note.style.display = "block";
         }
