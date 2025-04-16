@@ -1693,8 +1693,8 @@
       </form>
       <p id="emailNotification" style="display: none; font-weight: bold; margin-top: 1em;"></p>
     </div>
-    <div>
-    <p>In case the submission by email fails, please send the summary to <a href="mailto:scibrick@gmail.com">scibrick@gmail.com</a>. You can copy summary to clickboard and save it as a file, or you can print it with ctrl+p.</p>
+    <div id="copySymmary">
+    <p>You can copy summary to clickboard and save it as a file, or you can print it with ctrl+p.</p>
     <p><button id="copySummaryBtn">📋 COPY THE SUMMARY</button> <button id="downloadHtmlBtn">💾 SAVE FILE WITH ANSWERS</button></p>
     </div>
     <div id="summary"></div>
@@ -1855,36 +1855,34 @@
 
   // ==================== Submit Email Summary ====================
   document.getElementById("emailForm").addEventListener("submit", function (event) {
-    event.preventDefault();
+    event.preventDefault(); // This is already here, which is good
 
     const summaryElem = document.getElementById("summary");
     if (!summaryElem) return;
 
-    // Get the summary content and candidate name
     const summaryText = summaryElem.innerText || "";
     const firstName = document.getElementById("firstName")?.value.trim() || "";
     const familyName = document.getElementById("familyName")?.value.trim() || "";
     const fullName = `${firstName} ${familyName}`.trim();
 
-    // Inject values into hidden fields for the form
     document.getElementById("emailSummary").value = summaryText;
     document.getElementById("emailName").value = fullName;
-    document.getElementById("emailTitle").value = "TalTech 2025 candidate"; // Set title if not already
+    document.getElementById("emailTitle").value = "TalTech 2025 candidate";
 
     const note = document.getElementById("emailNotification");
 
-    // Send the form using EmailJS
     emailjs.sendForm("service_2b0sdqa", "template_1aerpa8", this)
       .then(() => {
         if (note) {
-          note.innerText = "📨 Email sent successfully.";
+          note.innerText = "📨 Email sent successfully. In case you pass the selection, you will receine a notification to the given email address by 5th of May.";
           note.style.color = "green";
           note.style.display = "block";
         }
+        // Don't clear the form or redirect – do nothing here
       })
       .catch(() => {
         if (note) {
-          note.innerText = "❌ Failed to send email.";
+          note.innerText = "❌ Failed to send email. Please send the summary to <a href="mailto:vladislav.ivanistsev@gmail.com">vladislav ivanistsev</a>. ";
           note.style.color = "red";
           note.style.display = "block";
         }
