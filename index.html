@@ -5,10 +5,49 @@
   <title>TalTech call for MSCA candidates</title>
   <meta name="author" content="Vladislav Ivanistsev, OpenAI ChatGPT o3 Model" />
 
-  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <script>
-    emailjs.init("NFXPe5qDjU1-bVYW7");
-  </script>
+  emailjs.init("NFXPe5qDjU1-bVYW7");
+
+  document.getElementById("emailForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const summaryElem = document.getElementById("summary");
+    if (!summaryElem) return;
+
+    // Get the summary content and candidate name
+    const summaryText = summaryElem.innerText || "";
+    const firstName = document.getElementById("firstName")?.value.trim() || "";
+    const familyName = document.getElementById("familyName")?.value.trim() || "";
+    const fullName = `${firstName} ${familyName}`.trim();
+
+    // Inject values into hidden fields for the form
+    document.getElementById("emailSummary").value = summaryText;
+    document.getElementById("emailName").value = fullName;
+
+    const note = document.getElementById("emailNotification");
+
+    // Send the form using EmailJS
+    emailjs.sendForm("service_2b0sdqa", "template_1aerpa8", this)
+      .then(() => {
+        if (note) {
+          note.innerText = "📨 Email sent successfully.";
+          note.style.color = "green";
+          note.style.display = "block";
+        }
+      })
+      .catch(() => {
+        if (note) {
+          note.innerText = "❌ Failed to send email.";
+          note.style.color = "red";
+          note.style.display = "block";
+        }
+      });
+  });
+</script>
+
+
 
 
   <style>
@@ -1684,7 +1723,12 @@
   <div id="submit" class="tab-content">
     <div id="title">
       <h2>Summary</h2>
-      <button id="sendEmailBtn">✉️ EMAIL THE SUMMARY</button>
+      <form id="emailForm">
+        <input type="hidden" name="title" id="emailTitle" value="TalTech 2025 candidate">
+        <input type="hidden" name="name" id="emailName">
+        <textarea name="summary" id="emailSummary" style="display: none;"></textarea>
+        <button type="submit" id="sendEmailBtn">✉️ EMAIL THE SUMMARY</button>
+      </form>
       <p id="emailNotification" style="display: none; font-weight: bold; margin-top: 1em;"></p>
     </div>
     <div>
@@ -1818,47 +1862,7 @@
       selection.removeAllRanges();
     }
   }
-
-// ==================== Email Summary ====================
-function sendSummaryEmail() {
-  const summaryElem = document.getElementById("summary");
-  if (!summaryElem) return;
-
-  const summaryText = summaryElem.innerText;
-  const firstName = document.getElementById("firstName")?.value.trim() || "";
-  const familyName = document.getElementById("familyName")?.value.trim() || "";
-  const fullName = `${firstName} ${familyName}`.trim();
-  const subjectTitle = "TalTech 2025 candidate";
-
-  emailjs.send("service_q93q8ll", "template_1aerpa8", {
-    name: fullName,
-    summary: summaryText,
-    title: subjectTitle
-  })
-  .then(() => {
-    const note = document.getElementById("emailNotification");
-    if (note) {
-      note.innerText = "📨 Email sent successfully.";
-      note.style.color = "green";
-      note.style.display = "block";
-    }
-  })
-  .catch(() => {
-    const note = document.getElementById("emailNotification");
-    if (note) {
-      note.innerText = "❌ Failed to send email.";
-      note.style.color = "red";
-      note.style.display = "block";
-    }
-  });
-}
-
-const emailBtn = document.getElementById("sendEmailBtn");
-if (emailBtn) {
-  emailBtn.addEventListener("click", sendSummaryEmail);
-}
-
-
+  
   // ==================== Download Summary ====================
   function downloadSummaryFile() {
     const summaryElem = document.getElementById("summary");
