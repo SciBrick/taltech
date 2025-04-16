@@ -4,14 +4,10 @@
   <meta charset="UTF-8">
   <title>TalTech call for MSCA candidates</title>
   <meta name="author" content="Vladislav Ivanistsev, OpenAI ChatGPT o3 Model" />
-
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     emailjs.init("NFXPe5qDjU1-bVYW7");
   </script>
-
-
-
   <style>
     /* Base styles */
     body, input, select, textarea, button,
@@ -1837,7 +1833,7 @@ function generateSummary() {
       selection.removeAllRanges();
     }
   }
-  
+
   // ==================== Download Summary ====================
   function downloadSummaryFile() {
     const summaryElem = document.getElementById("summary");
@@ -1874,6 +1870,7 @@ function generateSummary() {
     // Inject values into hidden fields for the form
     document.getElementById("emailSummary").value = summaryText;
     document.getElementById("emailName").value = fullName;
+    document.getElementById("emailTitle").value = "TalTech 2025 candidate"; // Set title if not already
 
     const note = document.getElementById("emailNotification");
 
@@ -1894,9 +1891,7 @@ function generateSummary() {
         }
       });
   });
+
 </script>
-
-
-
 </body>
 </html>
