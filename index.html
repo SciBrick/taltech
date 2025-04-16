@@ -1857,23 +1857,23 @@ function generateSummary() {
   // ==================== Submit Email Summary ====================
   document.getElementById("emailForm").addEventListener("submit", function (event) {
     event.preventDefault();
-
+  
     const summaryElem = document.getElementById("summary");
     if (!summaryElem) return;
-
+  
     // Get the summary content and candidate name
     const summaryText = summaryElem.innerText || "";
     const firstName = document.getElementById("firstName")?.value.trim() || "";
     const familyName = document.getElementById("familyName")?.value.trim() || "";
     const fullName = `${firstName} ${familyName}`.trim();
-
+  
     // Inject values into hidden fields for the form
     document.getElementById("emailSummary").value = summaryText;
     document.getElementById("emailName").value = fullName;
     document.getElementById("emailTitle").value = "TalTech 2025 candidate"; // Set title if not already
-
+  
     const note = document.getElementById("emailNotification");
-
+  
     // Send the form using EmailJS
     emailjs.sendForm("service_2b0sdqa", "template_1aerpa8", this)
       .then(() => {
@@ -1891,7 +1891,6 @@ function generateSummary() {
         }
       });
   });
-
 </script>
 </body>
 </html>
