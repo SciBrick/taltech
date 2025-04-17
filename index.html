@@ -12,7 +12,7 @@
     /* Base styles */
     body, input, select, textarea, button,
     p, label, legend, input, nav, ul, li, a {
-      font-size: 16px;
+      font-size: 1rem;
       font-family: sans-serif;
       line-height: 1.5;
       box-sizing: border-box;
@@ -31,13 +31,13 @@
       position: sticky;
       top: 0;
       z-index: 99;
-      background-color: #333;
+      background-color: #1d71b9;
     }
     nav ul {
       list-style: none;
       padding: 0;
       margin: 0;
-      background-color: #333;
+      background-color: #1d71b9;
       overflow: hidden;
     }
     nav ul li {
@@ -199,14 +199,14 @@
     /* Restore yellow highlight for supervisors and self-evaluation */
     #supervisors .candidate-name,
     #self-evaluation fieldset legend {
-      padding: 0.2em 0.6em;
-      border-radius: 0.4em;
+      padding: 0.5ex 1ex;
+      border-radius: 1ex;
     }
 
     /* Ensure block display of self-evaluation checkboxes */
     #self-evaluation label {
       display: block;
-      margin: 0.4em 0;
+      margin: 1ex 0;
     }
 
     /* Remove highlight from labels in CV and Questions tabs */
@@ -217,16 +217,16 @@
 
     /* Buttons */
     button {
-      background-color: #444;
+      background-color: #00abc0;
       color: #fff;
       border: none;
-      border-radius: 0.3em;
-      padding: 0.8em 1.6em;
+      border-radius: 1ex;
+      padding: 0.8em 2em;
       cursor: pointer;
       transition: background-color 0.2s ease;
     }
     button:hover {
-      background-color: #666;
+      color: #f9b234;
     }
 
     /* Mobile styles */
@@ -263,7 +263,7 @@
       <li><a href="#" data-target="self-evaluation">Self-evaluation</a></li>
       <li><a href="#" data-target="cv-details">CV details</a></li>
       <li><a href="#" data-target="questions">Questions</a></li>
-      <li><a href="#" data-target="submit">Submit</a></li>
+      <li><a href="#" data-target="submit">Summary</a></li>
     </ul>
   </nav>
 
@@ -275,9 +275,12 @@
     <p>TalTech – Tallinn University of Technology – invites you to <a href="https://www.eurekalert.org/news-releases/1044575" target="_blank">submit one application for three fundings to secure a&nbsp;postdoctoral fellowship</a>. This application will be evaluated for the <a href="https://marie-sklodowska-curie-actions.ec.europa.eu/about-msca/" target="_blank">MSCA Fellowship</a>, <a href="https://rea.ec.europa.eu/funding-and-grants/horizon-europe-widening-participation-and-spreading-excellence/era-talents_en" target="_blank">ERA Fellowship</a>, and <a href="https://etag.ee/en/changing-conditions-in-the-estonian-research-councils-incoming-postdoctoral-fellowship-scheme/" target="_blank">Estonian funding</a>. Such an opportunity is unique among a few EU countries, including Estonia, where TalTech is located.The submission deadline is the 14th of September 2025. Cooperating with TalTech increases your chances of obtaining personal funding, as <em>TalTech offers a&nbsp;support programme for preparing a competitive application</em>.</p>
     <p>N.B! Even with that support, preparing the application requires several months of training on grant writing and actual writing.</p>
     <h2>Selection of candidates</h2>
-    <p>To be considered for submission with TalTech, please follow the instructions on this page:
-    <ul><li>Select a suitable supervisor from the list below;</li><li>Complete a self-assessment of your competencies;</li><li>Provide key information from your CV;</li><li>Answer eight specific questions</li></ul> <em>Complete these steps by the 30th of April 2025</em> to be ranked and invited to TalTech’s support program.</p>
+    <p>To be considered for submission with TalTech, please follow the instructions on this page:</p>
+    <ul><li>Select a suitable supervisor from the given list;</li><li>Complete a self-assessment of your competencies;</li><li>Provide key information from your CV;</li><li>Answer eight specific questions</li></ul> <em>Complete these steps by the 30th of April 2025</em> to be ranked and invited to TalTech’s support program.</p>
+    <p><button onclick="go('supervisors')">Supervisors ➡️</button></p>
   </div>
+
+
 
   <div id="supervisors" class="tab-content">
   <p>Please choose a suitable supervisor.</p>
@@ -354,6 +357,7 @@
             </p>
         </div>
     </fieldset>
+    <p><button onclick="go('call')">⬅️ Call</button>&nbsp;&nbsp;&nbsp;<button onclick="go('self-evaluation')">Self‑evaluation ➡️</button></p>
   </div>
 
 
@@ -1557,9 +1561,14 @@
         </label>
       </fieldset>
     </form>
+    <p>
+      <button onclick="go('supervisors')">⬅️ Supervisors</button>&nbsp;&nbsp;&nbsp;
+      <button onclick="go('cv-details')">CV details ➡️</button>
+    </p>
   </div>
 
 <div id="cv-details" class="tab-content">
+    <p>Provide basic information from your CV. Write carefully your email address as it will be used to invite you to the program.</p>
     <fieldset data-topic="Basic Info">
         <legend>Basic CV information</legend>
         <div class="basic-line">
@@ -1584,7 +1593,7 @@
         </div>
         <div class="basic-line">
             <label for="googleScholar3">Your PostDoc supervisor' profile:<br/>(if applicable)</label>
-            <input type="urlf" id="googleScholar3" name="googleScholar3" placeholder="https://scholar.google.com/... or https://orcid.org/... or https://www.webofscience.com/...">
+            <input type="url" id="googleScholar3" name="googleScholar3" placeholder="https://scholar.google.com/... or https://orcid.org/... or https://www.webofscience.com/...">
         </div>
     </fieldset>
 
@@ -1614,7 +1623,7 @@
       </div>
     </fieldset>
 
-
+    <!-- Languages -->
     <fieldset data-topic="Languages">
         <legend>Languages</legend>
         <div class="basic-line">
@@ -1628,11 +1637,16 @@
             </select>
         </div>
     </fieldset>
+    <p>
+      <button onclick="go('self-evaluation')">⬅️ Self-evaluation</button>&nbsp;&nbsp;&nbsp;
+      <button onclick="go('questions')">Questions ➡️</button>
+    </p>
 </div>
 
 
   <!-- Questions tab -->
   <div id="questions" class="tab-content">
+    <p>Answer eight questions to explain your experiences and motivation.</p>
     <fieldset data-topic="Candidate Questions">
       <legend>Questions</legend>
 
@@ -1677,6 +1691,10 @@
       </p>
 
     </fieldset>
+    <p>
+      <button onclick="go('cv-details')">⬅️ CV details</button>&nbsp;&nbsp;&nbsp;
+      <button onclick="go('submit')">Summary ➡️</button>
+    </p>
   </div>
 
 
@@ -1689,14 +1707,14 @@
         <input type="hidden" name="title" id="emailTitle" value="TalTech 2025 candidate">
         <input type="hidden" name="name" id="emailName">
         <input type="hidden" name="summary" id="emailSummary">
-        <button type="submit" id="sendEmailBtn">✉️ SUBMIT YOUR SUMMARY</button>
+        <button type="submit" id="sendEmailBtn">✉️ Submit your summary</button>
       </form>
       <p id="emailNotification" style="display: none; font-weight: bold; margin-top: 1em;"></p>
     </div>
     <!-- The copySummary div is hidden by default -->
     <div id="copySummary" style="display:none;">
       <p>You can copy summary to clipboard and save it as a file, or you can print it with ctrl+p.</p>
-      <p><button id="copySummaryBtn">📋 COPY THE SUMMARY</button> <button id="downloadHtmlBtn">💾 SAVE FILE WITH ANSWERS</button></p>
+      <p><button id="copySummaryBtn">📋 Copy your summary</button> <button id="downloadHtmlBtn">💾 Download your summary</button></p>
     </div>
     <div id="summary"></div>
   </div>
@@ -1714,6 +1732,10 @@
         if (target === "submit") generateSummary();
       });
     });
+
+    function go(to) {
+      document.querySelector(`nav ul li a[data-target="${to}"]`).click();
+    }
 
     // ==================== Supervisor Profile Toggle ====================
     document.querySelectorAll(".viewDetailsBtn").forEach(button => {
@@ -1796,7 +1818,7 @@
           responsesHTML += `<p><strong>${label?.textContent || "Question"}</strong><br>${el.value.trim()}</p>`;
         }
       });
-      if (responsesHTML) summaryHTML += `<h3>Candidate Responses</h3>${responsesHTML}`;
+      if (responsesHTML) summaryHTML += `<h3>Summary of responces</h3>${responsesHTML}`;
 
       // Self-evaluation
       const selfEvalFieldsets = document.querySelectorAll("#self-evaluation fieldset");
