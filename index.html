@@ -1927,35 +1927,36 @@
     });
 
     // ==================== Local Storage for Form Data ====================
-    // Save function: store all input, textarea, and select values in localStorage
     function saveFormData() {
-      const fields = document.querySelectorAll("input, textarea, select");
-      fields.forEach(field => {
-        // Use field name if available, otherwise use id
-        const key = field.name || field.id;
-        if (key) {
-          localStorage.setItem(key, field.value);
-        }
-      });
+        const fields = document.querySelectorAll("input, textarea, select");
+        fields.forEach(field => {
+            const key = field.name || field.id;
+            if (!key) return;
+            if (field.type === "checkbox" || field.type === "radio") {
+                localStorage.setItem(key, field.checked);
+            } else {
+                localStorage.setItem(key, field.value);
+            }
+        });
     }
 
-    // Load function: populate fields from localStorage
     function loadFormData() {
-      const fields = document.querySelectorAll("input, textarea, select");
-      fields.forEach(field => {
-        const key = field.name || field.id;
-        if (key && localStorage.getItem(key)) {
-          field.value = localStorage.getItem(key);
-        }
-      });
+        const fields = document.querySelectorAll("input, textarea, select");
+        fields.forEach(field => {
+            const key = field.name || field.id;
+            const stored = localStorage.getItem(key);
+            if (stored === null) return;
+            if (field.type === "checkbox" || field.type === "radio") {
+                field.checked = (stored === "true");
+            } else {
+                field.value = stored;
+            }
+        });
     }
 
-    // Set event listeners on all form fields to save data on input/change
-    document.querySelectorAll("input, textarea, select").forEach(field => {
-      field.addEventListener("change", saveFormData);
-    });
+    document.querySelectorAll("input, textarea, select")
+        .forEach(field => field.addEventListener("change", saveFormData));
 
-    // On page load, restore stored data
     window.addEventListener("load", loadFormData);
   </script>
 </body>
