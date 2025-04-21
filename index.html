@@ -1934,17 +1934,17 @@
                 const key = field.name || field.id;
                 if (key) localStorage.setItem(key, field.value);
             });
-        // Checkbox groups
+        // Checkbox groups (store array of checked values)
         const cbNames = [...new Set(
             [...document.querySelectorAll("input[type='checkbox']")].map(cb => cb.name)
         )];
         cbNames.forEach(name => {
-            const checked = [...document.getElementsByName(name)]
+            const vals = [...document.getElementsByName(name)]
                 .filter(el => el.checked)
                 .map(el => el.value);
-            localStorage.setItem(name, JSON.stringify(checked));
+            localStorage.setItem(name, JSON.stringify(vals));
         });
-        // Radio groups
+        // Radio groups (store selected value)
         const radioNames = [...new Set(
             [...document.querySelectorAll("input[type='radio']")].map(rb => rb.name)
         )];
@@ -1962,26 +1962,26 @@
                 const stored = localStorage.getItem(key);
                 if (stored !== null) field.value = stored;
             });
-        // Checkboxes
+        // Checkbox groups
         [...new Set(
             [...document.querySelectorAll("input[type='checkbox']")].map(cb => cb.name)
         )].forEach(name => {
             const stored = localStorage.getItem(name);
             if (stored) {
                 const vals = JSON.parse(stored);
-                document.getElementsByName(name).forEach(cb => {
-                    cb.checked = vals.includes(cb.value);
+                document.getElementsByName(name).forEach(el => {
+                    el.checked = vals.includes(el.value);
                 });
             }
         });
-        // Radios
+        // Radio groups
         [...new Set(
             [...document.querySelectorAll("input[type='radio']")].map(rb => rb.name)
         )].forEach(name => {
             const stored = localStorage.getItem(name);
             if (stored) {
-                document.getElementsByName(name).forEach(rb => {
-                    rb.checked = (rb.value === stored);
+                document.getElementsByName(name).forEach(el => {
+                    el.checked = (el.value === stored);
                 });
             }
         });
@@ -1990,9 +1990,9 @@
     document.addEventListener("DOMContentLoaded", () => {
         loadFormData();
         document.querySelectorAll("input, textarea, select").forEach(field => {
-            // save on input, change and click to cover all scenarios
             field.addEventListener("input", saveFormData);
             field.addEventListener("change", saveFormData);
+            field.addEventListener("blur", saveFormData);
             if (field.type === "checkbox" || field.type === "radio") {
                 field.addEventListener("click", saveFormData);
             }
