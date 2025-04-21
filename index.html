@@ -1770,7 +1770,7 @@
       const emailAddress = document.getElementById("emailAddress")?.value.trim();
       let cvHTML = "";
       if (emailAddress) {
-        cvHTML += `<li><strong>Email:</strong> ${emailAddress}</li>`;
+        cvHTML += `<li><strong>Email:</strong> <a href="mailto:${emailAddress}">${emailAddress}</a></li>`;
       }
       const fields = [
         { id: "firstName", label: "First Name" },
