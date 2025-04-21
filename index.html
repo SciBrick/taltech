@@ -1731,6 +1731,7 @@
     <div id="summary"></div>
   </div>
 
+
   <script>
     // ==================== Tab Switching ====================
     document.querySelectorAll("nav ul li a").forEach(link => {
@@ -1767,6 +1768,7 @@
 
       // Basic CV Information
       const emailAddress = document.getElementById("emailAddress")?.value.trim();
+      let cvHTML = "";
       if (emailAddress) {
         cvHTML += `<li><strong>Email:</strong> ${emailAddress}</li>`;
       }
@@ -1777,28 +1779,26 @@
         { id: "googleScholar2", label: "Your PhD supervisor's profile", link: true },
         { id: "googleScholar3", label: "Your PostDoc supervisor's profile", link: true }
       ];
-      let cvHTML = "";
-      if (emailAddress) {
-        cvHTML += `<li><strong>Email:</strong> ${emailAddress}</li>`;
-      }
       cvHTML += fields.map(({ id, label, link }) => {
         const el = document.getElementById(id);
         if (el && el.value.trim()) {
           const v = el.value.trim();
-          return `<li><strong>${label}:</strong> ${link ? `<a href="${v}" target="_blank">${v}</a>` : v}</li>`;
+          return `<li><strong>${label}:</strong> ${link
+            ? `<a href="${v}" target="_blank">${v}</a>`
+            : v}</li>`;
         }
         return "";
       }).join("");
       if (cvHTML) {
         summaryHTML += `<h3>Basic CV Information</h3><ul>${cvHTML}</ul>`;
       }
-      
+
       // Chosen Supervisor
       const sup = document.querySelector('input[name="supervisorOption"]:checked');
       if (sup) {
         summaryHTML += `<h3>Chosen Supervisor</h3><p>${sup.value}</p>`;
       }
-      
+
       // Current Position
       const currentPos = document.getElementById("currentAffiliation")?.value.trim();
       if (currentPos) {
@@ -1882,9 +1882,10 @@
     // ==================== Download Summary ====================
     function downloadSummaryFile() {
       const summaryElem = document.getElementById("summary");
-      const content = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>TalTech 2025 candidate</title></head><body>" +
-                      summaryElem.outerHTML +
-                      "</body></html>";
+      const content =
+        "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>TalTech 2025 candidate</title></head><body>" +
+        summaryElem.outerHTML +
+        "</body></html>";
       const blob = new Blob([content], { type: "text/html" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -1901,7 +1902,7 @@
     document.getElementById("downloadHtmlBtn")?.addEventListener("click", downloadSummaryFile);
 
     // ==================== Submit Email Summary ====================
-    document.getElementById("emailForm").addEventListener("submit", function (event) {
+    document.getElementById("emailForm")?.addEventListener("submit", function (event) {
       event.preventDefault();
       const summaryElem = document.getElementById("summary");
       if (!summaryElem) return;
@@ -1920,7 +1921,7 @@
             note.style.color = "green";
             note.style.display = "block";
           }
-          document.getElementById("copySummary").style.display = "block";
+          document.getElementById("copySummary")?.style.display = "block";
         })
         .catch(() => {
           if (note) {
@@ -1928,34 +1929,59 @@
             note.style.color = "red";
             note.style.display = "block";
           }
-          document.getElementById("copySummary").style.display = "block";
+          document.getElementById("copySummary")?.style.display = "block";
         });
     });
 
     // ==================== Local Storage ====================
     function saveFormData() {
-      document.querySelectorAll("input, textarea, select").forEach(field => {
+      // Text, URL, date, textarea, select
+      document.querySelectorAll("input:not([type=checkbox]):not([type=radio]), textarea, select").forEach(field => {
         const key = field.name || field.id;
-        if (!key) return;
-        if (field.type === "checkbox" || field.type === "radio") {
-          localStorage.setItem(key, field.checked ? "true" : "false");
-        } else {
-          localStorage.setItem(key, field.value);
-        }
+        if (key) localStorage.setItem(key, field.value);
+      });
+      // Checkboxes (store array of values)
+      const cbGroups = new Set(Array.from(document.querySelectorAll("input[type='checkbox']")).map(cb => cb.name));
+      cbGroups.forEach(name => {
+        const values = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+        localStorage.setItem(name, JSON.stringify(values));
+      });
+      // Radios (store selected value per group)
+      const radioGroups = new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(radio => radio.name));
+      radioGroups.forEach(name => {
+        const sel = document.querySelector(`input[name="${name}"]:checked`);
+        if (sel) localStorage.setItem(name, sel.value);
       });
     }
 
     function loadFormData() {
-      document.querySelectorAll("input, textarea, select").forEach(field => {
+      // Text, URL, date, textarea, select
+      document.querySelectorAll("input:not([type=checkbox]):not([type=radio]), textarea, select").forEach(field => {
         const key = field.name || field.id;
         const stored = localStorage.getItem(key);
-        if (stored === null) return;
-        if (field.type === "checkbox" || field.type === "radio") {
-          field.checked = (stored === "true");
-        } else {
-          field.value = stored;
-        }
+        if (stored !== null) field.value = stored;
       });
+      // Checkboxes
+      Array.from(new Set(Array.from(document.querySelectorAll("input[type='checkbox']")).map(cb => cb.name)))
+        .forEach(name => {
+          const stored = localStorage.getItem(name);
+          if (stored) {
+            const values = JSON.parse(stored);
+            document.querySelectorAll(`input[name="${name}"]`).forEach(cb => {
+              cb.checked = values.includes(cb.value);
+            });
+          }
+        });
+      // Radios
+      Array.from(new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(radio => radio.name)))
+        .forEach(name => {
+          const stored = localStorage.getItem(name);
+          if (stored) {
+            document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+              radio.checked = (radio.value === stored);
+            });
+          }
+        });
     }
 
     document.addEventListener("DOMContentLoaded", () => {
