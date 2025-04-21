@@ -1783,9 +1783,7 @@
         const el = document.getElementById(id);
         if (el && el.value.trim()) {
           const v = el.value.trim();
-          return `<li><strong>${label}:</strong> ${link
-            ? `<a href="${v}" target="_blank">${v}</a>`
-            : v}</li>`;
+          return `<li><strong>${label}:</strong> ${link ? `<a href="${v}" target="_blank">${v}</a>` : v}</li>`;
         }
         return "";
       }).join("");
@@ -1882,9 +1880,8 @@
     // ==================== Download Summary ====================
     function downloadSummaryFile() {
       const summaryElem = document.getElementById("summary");
-      const content =
-        "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>TalTech 2025 candidate</title></head><body>" +
-        summaryElem.outerHTML +
+      const content = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>TalTech 2025 candidate</title></head><body>"
+        + summaryElem.outerHTML +
         "</body></html>";
       const blob = new Blob([content], { type: "text/html" });
       const url = URL.createObjectURL(blob);
@@ -1902,7 +1899,7 @@
     document.getElementById("downloadHtmlBtn")?.addEventListener("click", downloadSummaryFile);
 
     // ==================== Submit Email Summary ====================
-    document.getElementById("emailForm")?.addEventListener("submit", function (event) {
+    document.getElementById("emailForm")?.addEventListener("submit", function(event) {
       event.preventDefault();
       const summaryElem = document.getElementById("summary");
       if (!summaryElem) return;
@@ -1916,20 +1913,16 @@
       const note = document.getElementById("emailNotification");
       emailjs.sendForm("service_2b0sdqa", "template_1aerpa8", this)
         .then(() => {
-          if (note) {
-            note.innerText = "📨 The email with your summary was sent successfully. If you pass the selection, you will receive a notification at the given email address by the 15th of May 2025.";
-            note.style.color = "green";
-            note.style.display = "block";
-          }
-          document.getElementById("copySummary")?.style.display = "block";
+          if (note) note.innerText = "📨 The email with your summary was sent successfully. If you pass the selection, you will receive a notification at the given email address by the 15th of May 2025.";
+          if (note) { note.style.color = "green"; note.style.display = "block"; }
+          const copyDiv = document.getElementById("copySummary");
+          if (copyDiv) copyDiv.style.display = "block";
         })
         .catch(() => {
-          if (note) {
-            note.innerHTML = `❌ Failed to send an email. Please send the summary to <a href="mailto:vladislav.ivanistsev@gmail.com">vladislav.ivanistsev@gmail.com</a>.`;
-            note.style.color = "red";
-            note.style.display = "block";
-          }
-          document.getElementById("copySummary")?.style.display = "block";
+          if (note) note.innerHTML = `❌ Failed to send an email. Please send the summary to <a href="mailto:vladislav.ivanistsev@gmail.com">vladislav.ivanistsev@gmail.com</a>.`;
+          if (note) { note.style.color = "red"; note.style.display = "block"; }
+          const copyDiv = document.getElementById("copySummary");
+          if (copyDiv) copyDiv.style.display = "block";
         });
     });
 
@@ -1940,15 +1933,15 @@
         const key = field.name || field.id;
         if (key) localStorage.setItem(key, field.value);
       });
-      // Checkboxes (store array of values)
-      const cbGroups = new Set(Array.from(document.querySelectorAll("input[type='checkbox']")).map(cb => cb.name));
-      cbGroups.forEach(name => {
+      // Checkboxes
+      const cbNames = Array.from(new Set(Array.from(document.querySelectorAll("input[type='checkbox']")).map(cb => cb.name)));
+      cbNames.forEach(name => {
         const values = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
         localStorage.setItem(name, JSON.stringify(values));
       });
-      // Radios (store selected value per group)
-      const radioGroups = new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(radio => radio.name));
-      radioGroups.forEach(name => {
+      // Radios
+      const radioNames = Array.from(new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(r => r.name)));
+      radioNames.forEach(name => {
         const sel = document.querySelector(`input[name="${name}"]:checked`);
         if (sel) localStorage.setItem(name, sel.value);
       });
@@ -1966,14 +1959,14 @@
         .forEach(name => {
           const stored = localStorage.getItem(name);
           if (stored) {
-            const values = JSON.parse(stored);
+            const vals = JSON.parse(stored);
             document.querySelectorAll(`input[name="${name}"]`).forEach(cb => {
-              cb.checked = values.includes(cb.value);
+              cb.checked = vals.includes(cb.value);
             });
           }
         });
       // Radios
-      Array.from(new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(radio => radio.name)))
+      Array.from(new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(r => r.name)))
         .forEach(name => {
           const stored = localStorage.getItem(name);
           if (stored) {
