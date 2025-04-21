@@ -1765,32 +1765,11 @@
     function generateSummary() {
       let summaryHTML = "";
 
-      // Chosen Supervisor
-      const sup = document.querySelector('input[name="supervisorOption"]:checked');
-      if (sup) {
-        summaryHTML += `<h3>Chosen Supervisor</h3><p>${sup.value}</p>`;
-      }
-
-      // Current Position
-      const currentPos = document.getElementById("currentAffiliation")?.value.trim();
-      if (currentPos) {
-        summaryHTML += `<h3>Current Position</h3><p>${currentPos}</p>`;
-      }
-
-      // PhD Education
-      const phdInst = document.getElementById("phdAffiliation")?.value.trim();
-      const phdDate = document.getElementById("phdDefenceDate")?.value;
-      const phdCountry = document.getElementById("phdCountry")?.value.trim();
-      if (phdInst || phdDate || phdCountry) {
-        summaryHTML += `<h3>PhD Education</h3><ul>`;
-        if (phdInst)    summaryHTML += `<li><strong>Institution:</strong> ${phdInst}</li>`;
-        if (phdDate)    summaryHTML += `<li><strong>Defence Date:</strong> ${phdDate}</li>`;
-        if (phdCountry) summaryHTML += `<li><strong>Country:</strong> ${phdCountry}</li>`;
-        summaryHTML += `</ul>`;
-      }
-
       // Basic CV Information
       const emailAddress = document.getElementById("emailAddress")?.value.trim();
+      if (emailAddress) {
+        cvHTML += `<li><strong>Email:</strong> ${emailAddress}</li>`;
+      }
       const fields = [
         { id: "firstName", label: "First Name" },
         { id: "familyName", label: "Family Name" },
@@ -1812,6 +1791,30 @@
       }).join("");
       if (cvHTML) {
         summaryHTML += `<h3>Basic CV Information</h3><ul>${cvHTML}</ul>`;
+      }
+      
+      // Chosen Supervisor
+      const sup = document.querySelector('input[name="supervisorOption"]:checked');
+      if (sup) {
+        summaryHTML += `<h3>Chosen Supervisor</h3><p>${sup.value}</p>`;
+      }
+      
+      // Current Position
+      const currentPos = document.getElementById("currentAffiliation")?.value.trim();
+      if (currentPos) {
+        summaryHTML += `<h3>Current Position</h3><p>${currentPos}</p>`;
+      }
+
+      // PhD Education
+      const phdInst = document.getElementById("phdAffiliation")?.value.trim();
+      const phdDate = document.getElementById("phdDefenceDate")?.value;
+      const phdCountry = document.getElementById("phdCountry")?.value.trim();
+      if (phdInst || phdDate || phdCountry) {
+        summaryHTML += `<h3>PhD Education</h3><ul>`;
+        if (phdInst)    summaryHTML += `<li><strong>Institution:</strong> ${phdInst}</li>`;
+        if (phdDate)    summaryHTML += `<li><strong>Defence Date:</strong> ${phdDate}</li>`;
+        if (phdCountry) summaryHTML += `<li><strong>Country:</strong> ${phdCountry}</li>`;
+        summaryHTML += `</ul>`;
       }
 
       // Languages
@@ -1929,14 +1932,13 @@
         });
     });
 
-    // ==================== Local Storage for Form Data ====================
+    // ==================== Local Storage ====================
     function saveFormData() {
-      const fields = document.querySelectorAll("input, textarea, select");
-      fields.forEach(field => {
+      document.querySelectorAll("input, textarea, select").forEach(field => {
         const key = field.name || field.id;
         if (!key) return;
         if (field.type === "checkbox" || field.type === "radio") {
-          localStorage.setItem(key, field.checked);
+          localStorage.setItem(key, field.checked ? "true" : "false");
         } else {
           localStorage.setItem(key, field.value);
         }
@@ -1944,8 +1946,7 @@
     }
 
     function loadFormData() {
-      const fields = document.querySelectorAll("input, textarea, select");
-      fields.forEach(field => {
+      document.querySelectorAll("input, textarea, select").forEach(field => {
         const key = field.name || field.id;
         const stored = localStorage.getItem(key);
         if (stored === null) return;
@@ -1957,11 +1958,13 @@
       });
     }
 
-    document.querySelectorAll("input, textarea, select").forEach(field => {
-      field.addEventListener("change", saveFormData);
+    document.addEventListener("DOMContentLoaded", () => {
+      loadFormData();
+      document.querySelectorAll("input, textarea, select").forEach(field => {
+        const evt = (field.type === "checkbox" || field.type === "radio" || field.tagName === "SELECT") ? "change" : "input";
+        field.addEventListener(evt, saveFormData);
+      });
     });
-
-    window.addEventListener("load", loadFormData);
   </script>
 </body>
 </html>
