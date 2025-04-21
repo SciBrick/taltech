@@ -1926,7 +1926,7 @@
         });
     });
 
- // ==================== Local Storage ====================
+    // ==================== Local Storage ====================
     function saveFormData() {
         // Text, URL, date, textarea, select
         document.querySelectorAll("input:not([type=checkbox]):not([type=radio]), textarea, select")
@@ -1939,8 +1939,9 @@
             [...document.querySelectorAll("input[type='checkbox']")].map(cb => cb.name)
         )];
         cbNames.forEach(name => {
-            const checked = [...document.querySelectorAll(`input[name="${CSS.escape(name)}"]:checked`)]
-                .map(cb => cb.value);
+            const checked = [...document.getElementsByName(name)]
+                .filter(el => el.checked)
+                .map(el => el.value);
             localStorage.setItem(name, JSON.stringify(checked));
         });
         // Radio groups
@@ -1948,7 +1949,7 @@
             [...document.querySelectorAll("input[type='radio']")].map(rb => rb.name)
         )];
         radioNames.forEach(name => {
-            const sel = document.querySelector(`input[name="${CSS.escape(name)}"]:checked`);
+            const sel = [...document.getElementsByName(name)].find(el => el.checked);
             if (sel) localStorage.setItem(name, sel.value);
         });
     }
@@ -1961,25 +1962,27 @@
                 const stored = localStorage.getItem(key);
                 if (stored !== null) field.value = stored;
             });
-        // Checkbox groups
+        // Checkboxes
         [...new Set(
             [...document.querySelectorAll("input[type='checkbox']")].map(cb => cb.name)
         )].forEach(name => {
             const stored = localStorage.getItem(name);
             if (stored) {
                 const vals = JSON.parse(stored);
-                document.querySelectorAll(`input[name="${CSS.escape(name)}"]`)
-                    .forEach(cb => { cb.checked = vals.includes(cb.value); });
+                document.getElementsByName(name).forEach(cb => {
+                    cb.checked = vals.includes(cb.value);
+                });
             }
         });
-        // Radio groups
+        // Radios
         [...new Set(
             [...document.querySelectorAll("input[type='radio']")].map(rb => rb.name)
         )].forEach(name => {
             const stored = localStorage.getItem(name);
             if (stored) {
-                document.querySelectorAll(`input[name="${CSS.escape(name)}"]`)
-                    .forEach(rb => { rb.checked = (rb.value === stored); });
+                document.getElementsByName(name).forEach(rb => {
+                    rb.checked = (rb.value === stored);
+                });
             }
         });
     }
@@ -1987,8 +1990,12 @@
     document.addEventListener("DOMContentLoaded", () => {
         loadFormData();
         document.querySelectorAll("input, textarea, select").forEach(field => {
+            // save on input, change and click to cover all scenarios
             field.addEventListener("input", saveFormData);
             field.addEventListener("change", saveFormData);
+            if (field.type === "checkbox" || field.type === "radio") {
+                field.addEventListener("click", saveFormData);
+            }
         });
         window.addEventListener("beforeunload", saveFormData);
     });
