@@ -1765,6 +1765,30 @@
     function generateSummary() {
       let summaryHTML = "";
 
+      // Chosen Supervisor
+      const sup = document.querySelector('input[name="supervisorOption"]:checked');
+      if (sup) {
+        summaryHTML += `<h3>Chosen Supervisor</h3><p>${sup.value}</p>`;
+      }
+
+      // Current Position
+      const currentPos = document.getElementById("currentAffiliation")?.value.trim();
+      if (currentPos) {
+        summaryHTML += `<h3>Current Position</h3><p>${currentPos}</p>`;
+      }
+
+      // PhD Education
+      const phdInst = document.getElementById("phdAffiliation")?.value.trim();
+      const phdDate = document.getElementById("phdDefenceDate")?.value;
+      const phdCountry = document.getElementById("phdCountry")?.value.trim();
+      if (phdInst || phdDate || phdCountry) {
+        summaryHTML += `<h3>PhD Education</h3><ul>`;
+        if (phdInst)    summaryHTML += `<li><strong>Institution:</strong> ${phdInst}</li>`;
+        if (phdDate)    summaryHTML += `<li><strong>Defence Date:</strong> ${phdDate}</li>`;
+        if (phdCountry) summaryHTML += `<li><strong>Country:</strong> ${phdCountry}</li>`;
+        summaryHTML += `</ul>`;
+      }
+
       // Basic CV Information
       const emailAddress = document.getElementById("emailAddress")?.value.trim();
       const fields = [
@@ -1774,80 +1798,64 @@
         { id: "googleScholar2", label: "Your PhD supervisor's profile", link: true },
         { id: "googleScholar3", label: "Your PostDoc supervisor's profile", link: true }
       ];
-
       let cvHTML = "";
       if (emailAddress) {
         cvHTML += `<li><strong>Email:</strong> ${emailAddress}</li>`;
       }
-
       cvHTML += fields.map(({ id, label, link }) => {
         const el = document.getElementById(id);
         if (el && el.value.trim()) {
-          const value = el.value.trim();
-          return `<li><strong>${label}:</strong> ${link ? `<a href="${value}" target="_blank">${value}</a>` : value}</li>`;
+          const v = el.value.trim();
+          return `<li><strong>${label}:</strong> ${link ? `<a href="${v}" target="_blank">${v}</a>` : v}</li>`;
         }
         return "";
       }).join("");
-
-      if (cvHTML) summaryHTML += `<h3>Basic CV Information</h3><ul>${cvHTML}</ul>`;
-
-      // Education
-      const eduFieldset = document.querySelector('#cv-details fieldset[data-topic="Education and Experience"]');
-      if (eduFieldset) {
-        const rows = eduFieldset.querySelectorAll("tbody tr");
-        let eduHTML = "";
-        rows.forEach(row => {
-          const cells = row.querySelectorAll("td");
-          const position = cells[0]?.textContent.trim().toLowerCase();
-          if (["current", "phd student"].includes(position)) {
-            const startYear = cells[1]?.querySelector("select")?.value || "";
-            const endYear = cells[2]?.querySelector("select")?.value || "";
-            const affiliation = cells[3]?.querySelector("input")?.value.trim() || "";
-            eduHTML += `<li><strong>${position}:</strong> Start Year: ${startYear || "N/A"}${endYear ? ", End Year: " + endYear : ""}${affiliation ? ", Affiliation: " + affiliation : ""}</li>`;
-          }
-        });
-        if (eduHTML) summaryHTML += `<h3>Education & Experience</h3><ul>${eduHTML}</ul>`;
+      if (cvHTML) {
+        summaryHTML += `<h3>Basic CV Information</h3><ul>${cvHTML}</ul>`;
       }
 
       // Languages
-      const englishLevel = document.getElementById("englishLevel")?.value.trim();
-      const motherTongue = document.getElementById("motherTongue")?.value.trim();
-      if (englishLevel || motherTongue) {
-        summaryHTML += `<h3>Languages</h3><ul>${englishLevel ? `<li><strong>English:</strong> ${englishLevel}</li>` : ""}${motherTongue ? `<li><strong>Mother Tongue:</strong> ${motherTongue}</li>` : ""}</ul>`;
+      const eng = document.getElementById("englishLevel")?.value.trim();
+      if (eng) {
+        summaryHTML += `<h3>Languages</h3><ul><li><strong>English:</strong> ${eng}</li></ul>`;
       }
 
       // Candidate Responses
       const questionIDs = [
-        "competencies", "motivationEstonia", "careerGoal", "applicationsExperience",
-        "phdSupervisorStyle", "multiculturalExperience", "problemSolving", "publicationRole"
+        "competencies", "motivationEstonia", "careerGoal",
+        "applicationsExperience", "phdSupervisorStyle",
+        "mobilityExperience", "problemSolving", "publicationRole"
       ];
-      let responsesHTML = "";
+      let respHTML = "";
       questionIDs.forEach(id => {
         const el = document.getElementById(id);
-        const label = document.querySelector(`label[for="${id}"]`);
+        const lbl = document.querySelector(`label[for="${id}"]`);
         if (el && el.value.trim()) {
-          responsesHTML += `<p><strong>${label?.textContent || "Question"}</strong><br>${el.value.trim()}</p>`;
+          respHTML += `<p><strong>${lbl?.textContent || ""}</strong><br>${el.value.trim()}</p>`;
         }
       });
-      if (responsesHTML) summaryHTML += `<h3>Summary of responces</h3>${responsesHTML}`;
+      if (respHTML) {
+        summaryHTML += `<h3>Summary of responses</h3>${respHTML}`;
+      }
 
-      // Self-evaluation
-      const selfEvalFieldsets = document.querySelectorAll("#self-evaluation fieldset");
+      // Self-Evaluation
+      const selSets = document.querySelectorAll("#self-evaluation fieldset");
       let selfEvalHTML = "";
-      selfEvalFieldsets.forEach(fieldset => {
-        const topic = fieldset.getAttribute("data-topic") || fieldset.querySelector("legend")?.textContent || "Subtopic";
-        const checked = fieldset.querySelectorAll("input[type='checkbox']:checked");
+      selSets.forEach(fs => {
+        const topic = fs.getAttribute("data-topic") || fs.querySelector("legend")?.textContent;
+        const checked = fs.querySelectorAll("input[type='checkbox']:checked");
         if (checked.length) {
           selfEvalHTML += `<h4>${topic}</h4><ul>`;
           checked.forEach(cb => {
             selfEvalHTML += `<li>${cb.value} (${cb.getAttribute("data-level")})</li>`;
           });
-          selfEvalHTML += "</ul>";
+          selfEvalHTML += `</ul>`;
         }
       });
-      if (selfEvalHTML) summaryHTML += `<h3>Self-Evaluation</h3>${selfEvalHTML}`;
+      if (selfEvalHTML) {
+        summaryHTML += `<h3>Self-Evaluation</h3>${selfEvalHTML}`;
+      }
 
-      // Output the generated summary into the summary div
       document.getElementById("summary").innerHTML = summaryHTML;
     }
 
@@ -1871,7 +1879,9 @@
     // ==================== Download Summary ====================
     function downloadSummaryFile() {
       const summaryElem = document.getElementById("summary");
-      const content = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>TalTech 2025 candidate</title></head><body>" + summaryElem?.outerHTML + "</body></html>";
+      const content = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>TalTech 2025 candidate</title></head><body>" +
+                      summaryElem.outerHTML +
+                      "</body></html>";
       const blob = new Blob([content], { type: "text/html" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -1889,30 +1899,24 @@
 
     // ==================== Submit Email Summary ====================
     document.getElementById("emailForm").addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent page refresh
-
+      event.preventDefault();
       const summaryElem = document.getElementById("summary");
       if (!summaryElem) return;
-
       const summaryText = summaryElem.innerText || "";
       const firstName = document.getElementById("firstName")?.value.trim() || "";
       const familyName = document.getElementById("familyName")?.value.trim() || "";
       const fullName = `${firstName} ${familyName}`.trim();
-
       document.getElementById("emailSummary").value = summaryText;
       document.getElementById("emailName").value = fullName;
       document.getElementById("emailTitle").value = "TalTech 2025 candidate";
-
       const note = document.getElementById("emailNotification");
-
       emailjs.sendForm("service_2b0sdqa", "template_1aerpa8", this)
         .then(() => {
           if (note) {
-            note.innerText = "📨 The email with your summary was sent successfully. If you pass the selection, you will receive a notification at the given email addressby the 15th of May 2025.";
+            note.innerText = "📨 The email with your summary was sent successfully. If you pass the selection, you will receive a notification at the given email address by the 15th of May 2025.";
             note.style.color = "green";
             note.style.display = "block";
           }
-          // Reveal the copySummary div after successful send
           document.getElementById("copySummary").style.display = "block";
         })
         .catch(() => {
@@ -1921,41 +1925,41 @@
             note.style.color = "red";
             note.style.display = "block";
           }
-          // Optionally, reveal the copySummary div so the user can copy the summary
           document.getElementById("copySummary").style.display = "block";
         });
     });
 
     // ==================== Local Storage for Form Data ====================
     function saveFormData() {
-        const fields = document.querySelectorAll("input, textarea, select");
-        fields.forEach(field => {
-            const key = field.name || field.id;
-            if (!key) return;
-            if (field.type === "checkbox" || field.type === "radio") {
-                localStorage.setItem(key, field.checked);
-            } else {
-                localStorage.setItem(key, field.value);
-            }
-        });
+      const fields = document.querySelectorAll("input, textarea, select");
+      fields.forEach(field => {
+        const key = field.name || field.id;
+        if (!key) return;
+        if (field.type === "checkbox" || field.type === "radio") {
+          localStorage.setItem(key, field.checked);
+        } else {
+          localStorage.setItem(key, field.value);
+        }
+      });
     }
 
     function loadFormData() {
-        const fields = document.querySelectorAll("input, textarea, select");
-        fields.forEach(field => {
-            const key = field.name || field.id;
-            const stored = localStorage.getItem(key);
-            if (stored === null) return;
-            if (field.type === "checkbox" || field.type === "radio") {
-                field.checked = (stored === "true");
-            } else {
-                field.value = stored;
-            }
-        });
+      const fields = document.querySelectorAll("input, textarea, select");
+      fields.forEach(field => {
+        const key = field.name || field.id;
+        const stored = localStorage.getItem(key);
+        if (stored === null) return;
+        if (field.type === "checkbox" || field.type === "radio") {
+          field.checked = (stored === "true");
+        } else {
+          field.value = stored;
+        }
+      });
     }
 
-    document.querySelectorAll("input, textarea, select")
-        .forEach(field => field.addEventListener("change", saveFormData));
+    document.querySelectorAll("input, textarea, select").forEach(field => {
+      field.addEventListener("change", saveFormData);
+    });
 
     window.addEventListener("load", loadFormData);
   </script>
