@@ -1613,7 +1613,7 @@
     <fieldset data-topic="Work Experience">
       <legend>Work experience</legend>
       <div class="basic-line">
-        <label for="currentAffiliation">Current Position:</label>
+        <label for="currentAffiliation">Current working place:</label>
         <input type="text" id="currentAffiliation" name="currentAffiliation" placeholder="University or company, etc" maxlength="200">
       </div>
     </fieldset>
@@ -1926,86 +1926,62 @@
         });
     });
 
-    // ==================== Local Storage ====================
-    function saveFormData() {
-        // 1) all text/url/date inputs, textareas, selects
-        document.querySelectorAll("input:not([type=checkbox]):not([type=radio]), textarea, select")
-            .forEach(el => {
-                const key = el.name || el.id;
-                if (key) localStorage.setItem(key, el.value);
-            });
-
-        // 2) checkbox groups → JSON arrays
-        const cbNames = [...new Set(
-            [...document.querySelectorAll("input[type='checkbox']")].map(cb => cb.name)
-        )];
-        cbNames.forEach(name => {
-            const vals = [...document.getElementsByName(name)]
-                .filter(cb => cb.checked)
-                .map(cb => cb.value);
-            localStorage.setItem(name, JSON.stringify(vals));
-        });
-
-        // 3) radio groups → single value
-        const radioNames = [...new Set(
-            [...document.querySelectorAll("input[type='radio']")].map(r => r.name)
-        )];
-        radioNames.forEach(name => {
-            const sel = [...document.getElementsByName(name)].find(r => r.checked);
-            if (sel) localStorage.setItem(name, sel.value);
-        });
-    }
-
-    function loadFormData() {
-        // 1) text/url/date inputs, textareas, selects
-        document.querySelectorAll("input:not([type=checkbox]):not([type=radio]), textarea, select")
-            .forEach(el => {
-                const key = el.name || el.id;
-                const stored = localStorage.getItem(key);
-                if (stored !== null) el.value = stored;
-            });
-
-        // 2) restore checkbox groups
-        [...new Set(
-            [...document.querySelectorAll("input[type='checkbox']")].map(cb => cb.name)
-        )].forEach(name => {
-            const stored = localStorage.getItem(name);
-            if (stored) {
-                const vals = JSON.parse(stored);
-                document.getElementsByName(name).forEach(cb => {
-                    cb.checked = vals.includes(cb.value);
-                });
-            }
-        });
-
-        // 3) restore radio groups
-        [...new Set(
-            [...document.querySelectorAll("input[type='radio']")].map(r => r.name)
-        )].forEach(name => {
-            const stored = localStorage.getItem(name);
-            if (stored) {
-                document.getElementsByName(name).forEach(r => {
-                    r.checked = (r.value === stored);
-                });
-            }
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        loadFormData();
-        document.querySelectorAll("input, textarea, select").forEach(el => {
-            // text, url, textarea, selects
-            el.addEventListener("input", saveFormData);
-            el.addEventListener("change", saveFormData);
-            el.addEventListener("blur", saveFormData);
-            // ensure checkboxes & radios also fire on click
-            if (el.type === "checkbox" || el.type === "radio") {
-                el.addEventListener("click", saveFormData);
-            }
-        });
-        // final catch‑all
-        window.addEventListener("beforeunload", saveFormData);
+  // ==================== Local Storage ====================
+  function saveFormData() {
+    const data = {};
+    document.querySelectorAll("input, textarea, select").forEach(el => {
+      const key = el.name || el.id;
+      if (!key) return;
+      if (el.type === "checkbox") {
+        // accumulate an array of checked values
+        data[key] = data[key] || [];
+        if (el.checked) data[key].push(el.value);
+      } else if (el.type === "radio") {
+        // store the single selected value
+        if (el.checked) data[key] = el.value;
+      } else {
+        // text, url, date, textarea, select
+        data[key] = el.value;
+      }
     });
+    localStorage.setItem("taltechFormData", JSON.stringify(data));
+  }
+
+  function loadFormData() {
+    const json = localStorage.getItem("taltechFormData");
+    if (!json) return;
+    const data = JSON.parse(json);
+    Object.entries(data).forEach(([key, value]) => {
+      // first try by name (for groups)
+      const byName = document.getElementsByName(key);
+      if (byName.length) {
+        byName.forEach(el => {
+          if (el.type === "checkbox") {
+            el.checked = Array.isArray(value) && value.includes(el.value);
+          } else if (el.type === "radio") {
+            el.checked = (el.value === value);
+          } else {
+            el.value = value;
+          }
+        });
+      } else {
+        // otherwise by id
+        const el = document.getElementById(key);
+        if (!el) return;
+        el.value = value;
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFormData();
+    document.querySelectorAll("input, textarea, select").forEach(el => {
+      el.addEventListener("input", saveFormData);
+      el.addEventListener("change", saveFormData);
+      el.addEventListener("blur", saveFormData);
+    });
+    window.addEventListener("beforeunload", saveFormData);
+  });
   </script>
 </body>
 </html>
