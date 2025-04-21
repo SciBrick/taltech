@@ -1926,64 +1926,70 @@
         });
     });
 
-    // ==================== Local Storage ====================
-    function saveFormData() {
-      // Text, URL, date, textarea, select
-      document.querySelectorAll("input:not([type=checkbox]):not([type=radio]), textarea, select").forEach(field => {
-        const key = field.name || field.id;
-        if (key) localStorage.setItem(key, field.value);
-      });
-      // Checkboxes
-      const cbNames = Array.from(new Set(Array.from(document.querySelectorAll("input[type='checkbox']")).map(cb => cb.name)));
-      cbNames.forEach(name => {
-        const values = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
-        localStorage.setItem(name, JSON.stringify(values));
-      });
-      // Radios
-      const radioNames = Array.from(new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(r => r.name)));
-      radioNames.forEach(name => {
-        const sel = document.querySelector(`input[name="${name}"]:checked`);
-        if (sel) localStorage.setItem(name, sel.value);
-      });
-    }
-
-    function loadFormData() {
-      // Text, URL, date, textarea, select
-      document.querySelectorAll("input:not([type=checkbox]):not([type=radio]), textarea, select").forEach(field => {
-        const key = field.name || field.id;
-        const stored = localStorage.getItem(key);
-        if (stored !== null) field.value = stored;
-      });
-      // Checkboxes
-      Array.from(new Set(Array.from(document.querySelectorAll("input[type='checkbox']")).map(cb => cb.name)))
-        .forEach(name => {
-          const stored = localStorage.getItem(name);
-          if (stored) {
-            const vals = JSON.parse(stored);
-            document.querySelectorAll(`input[name="${name}"]`).forEach(cb => {
-              cb.checked = vals.includes(cb.value);
-            });
-          }
-        });
-      // Radios
-      Array.from(new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(r => r.name)))
-        .forEach(name => {
-          const stored = localStorage.getItem(name);
-          if (stored) {
-            document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
-              radio.checked = (radio.value === stored);
-            });
-          }
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      loadFormData();
-      document.querySelectorAll("input, textarea, select").forEach(field => {
-        const evt = (field.type === "checkbox" || field.type === "radio" || field.tagName === "SELECT") ? "change" : "input";
-        field.addEventListener(evt, saveFormData);
-      });
+// ==================== Local Storage ====================
+  function saveFormData() {
+    // Text, URL, date, textarea, select
+    document.querySelectorAll("input:not([type=checkbox]):not([type=radio]), textarea, select").forEach(field => {
+      const key = field.name || field.id;
+      if (key) localStorage.setItem(key, field.value);
     });
+    // Checkboxes
+    const cbNames = Array.from(new Set(Array.from(document.querySelectorAll("input[type='checkbox']")).map(cb => cb.name)));
+    cbNames.forEach(name => {
+      const values = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+      localStorage.setItem(name, JSON.stringify(values));
+    });
+    // Radios
+    const radioNames = Array.from(new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(r => r.name)));
+    radioNames.forEach(name => {
+      const sel = document.querySelector(`input[name="${name}"]:checked`);
+      if (sel) localStorage.setItem(name, sel.value);
+    });
+  }
+
+  function loadFormData() {
+    // Text, URL, date, textarea, select
+    document.querySelectorAll("input:not([type=checkbox]):not([type=radio]), textarea, select").forEach(field => {
+      const key = field.name || field.id;
+      const stored = localStorage.getItem(key);
+      if (stored !== null) field.value = stored;
+    });
+    // Checkboxes
+    Array.from(new Set(Array.from(document.querySelectorAll("input[type='checkbox']")).map(cb => cb.name)))
+      .forEach(name => {
+        const stored = localStorage.getItem(name);
+        if (stored) {
+          const vals = JSON.parse(stored);
+          document.querySelectorAll(`input[name="${name}"]`).forEach(cb => {
+            cb.checked = vals.includes(cb.value);
+          });
+        }
+      });
+    // Radios
+    Array.from(new Set(Array.from(document.querySelectorAll("input[type='radio']")).map(r => r.name)))
+      .forEach(name => {
+        const stored = localStorage.getItem(name);
+        if (stored) {
+          document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+            radio.checked = (radio.value === stored);
+          });
+        }
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFormData();
+    document.querySelectorAll("input, textarea, select").forEach(field => {
+      const evt = (field.type === "checkbox" || field.type === "radio" || field.tagName === "SELECT")
+        ? "change"
+        : "input";
+      field.addEventListener(evt, saveFormData);
+    });
+    // ensure click on checkboxes and radios also saves on mobile
+    document.querySelectorAll("input[type='checkbox'], input[type='radio']").forEach(field => {
+      field.addEventListener("click", saveFormData);
+    });
+  });        
   </script>
 </body>
 </html>
